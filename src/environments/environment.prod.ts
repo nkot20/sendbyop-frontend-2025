@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://back-sendbyop-2023.onrender.com/api/v1/',
+  apiUrl: 'https://back-sendbyop-2023.onrender.com/api/v1',
   appName: 'SendByOp',
   appVersion: '1.0.0',
   defaultLanguage: 'fr',

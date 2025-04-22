@@ -1,0 +1,177 @@
+<section class="trips-page py-5">
+  <div class="container">
+    <div class="section-header text-center mb-5">
+      <h2 class="section-title">Voyages disponibles</h2>
+      <p class="section-subtitle">Trouvez le voyageur idéal pour transporter votre colis</p>
+    </div>
+
+    <div class="search-container mb-5">
+      <div class="search-card">
+        <form (ngSubmit)="onSearch()">
+          <div class="row g-3 align-items-end">
+            <div class="col-md-3">
+              <label for="searchDeparture" class="form-label">Départ</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-plane-departure"></i></span>
+                <input type="text" id="searchDeparture" class="form-control" placeholder="Ville de départ" [(ngModel)]="searchDeparture" name="searchDeparture">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <label for="searchArrival" class="form-label">Arrivée</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-plane-arrival"></i></span>
+                <input type="text" id="searchArrival" class="form-control" placeholder="Ville d'arrivée" [(ngModel)]="searchArrival" name="searchArrival">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <label for="searchDate" class="form-label">Date</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                <input type="date" id="searchDate" class="form-control" [(ngModel)]="searchDate" name="searchDate">
+              </div>
+            </div>
+            <div class="col-md-3 d-grid">
+              <button type="submit" class="btn btn-sendbyop">
+                <i class="fas fa-search me-2"></i>Rechercher
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="filter-sort-container mb-4">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <div class="d-flex align-items-center">
+            <label for="sortTrips" class="form-label me-2 mb-0">Trier par :</label>
+            <select id="sortTrips" class="form-select" [(ngModel)]="sortKey" name="sortKey" (change)="onSort()">
+              <option value="date">Date de départ</option>
+              <option value="arrival">Date d'arrivée</option>
+              <option value="departure">Ville de départ</option>
+              <option value="arrivalCity">Ville d'arrivée</option>
+              <option value="transporter">Transporteur</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <span class="badge bg-primary me-2">{{ filteredTrips.length }} voyages trouvés</span>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-outline-primary active">
+              <i class="fas fa-th-large"></i>
+            </button>
+            <button type="button" class="btn btn-outline-primary">
+              <i class="fas fa-list"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4 mb-4" *ngFor="let trip of filteredTrips">
+        <div class="card trip-card h-100">
+          <div class="trip-header">
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="d-flex align-items-center">
+                <img [src]="trip.avatar" alt="Voyageur" class="rounded-circle me-2" width="40" height="40">
+                <div>
+                  <h6 class="mb-0">{{ trip.transporter }}</h6>
+                  <div class="text-warning">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                    <small class="text-muted">(4.5)</small>
+                  </div>
+                </div>
+              </div>
+              <span class="badge bg-success">Vérifié</span>
+            </div>
+          </div>
+          
+          <div class="trip-body">
+            <div class="trip-route">
+              <div class="trip-city">
+                <div>{{ trip.departure }}</div>
+                <small class="text-muted">France</small>
+              </div>
+              <div class="trip-route-line"></div>
+              <div class="trip-city">
+                <div>{{ trip.arrival }}</div>
+                <small class="text-muted">Destination</small>
+              </div>
+            </div>
+            
+            <div class="trip-details">
+              <div class="trip-detail-item">
+                <div class="detail-label">Date</div>
+                <div class="detail-value">{{ trip.date | date:'dd MMM yyyy' }}</div>
+              </div>
+              <div class="trip-detail-item">
+                <div class="detail-label">Compagnie</div>
+                <div class="detail-value">Air France</div>
+              </div>
+              <div class="trip-detail-item">
+                <div class="detail-label">Vol</div>
+                <div class="detail-value">AF {{ 100 + filteredTrips.indexOf(trip) }}</div>
+              </div>
+            </div>
+            
+            <div class="trip-baggage">
+              <i class="fas fa-luggage-cart"></i>
+              <div class="baggage-info">
+                <div class="baggage-weight">{{ 10 + filteredTrips.indexOf(trip) % 15 }} kg disponibles</div>
+                <div class="baggage-price">{{ 15 + filteredTrips.indexOf(trip) % 10 }}€/kg</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="trip-footer">
+            <button class="btn btn-sendbyop btn-sm w-100">Réserver un espace</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pagination-container mt-4 mb-5 text-center" *ngIf="filteredTrips.length > 0">
+      <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+          <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+              <i class="fas fa-chevron-left"></i>
+            </a>
+          </li>
+          <li class="page-item active"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#">
+              <i class="fas fa-chevron-right"></i>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="no-results text-center py-5" *ngIf="filteredTrips.length === 0">
+      <img src="assets/images/no-results.svg" alt="Aucun résultat" class="img-fluid mb-4" style="max-width: 200px;">
+      <h3>Aucun voyage ne correspond à votre recherche</h3>
+      <p class="text-muted">Essayez de modifier vos critères de recherche ou revenez plus tard.</p>
+      <button class="btn btn-outline-sendbyop mt-3" (click)="resetSearch()">
+        <i class="fas fa-redo me-2"></i>Réinitialiser la recherche
+      </button>
+    </div>
+
+    <div class="cta-container mt-5">
+      <div class="cta-content text-center">
+        <h2 class="cta-title">Vous voyagez prochainement ?</h2>
+        <p class="cta-text">Proposez votre espace bagage disponible et gagnez de l'argent pendant votre voyage</p>
+        <button class="btn btn-cta btn-lg">
+          <i class="fas fa-suitcase me-2"></i>Proposer mon voyage
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

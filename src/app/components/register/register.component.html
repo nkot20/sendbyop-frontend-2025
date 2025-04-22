@@ -1,0 +1,182 @@
+<div class="auth-container">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8">
+        <div class="auth-card" style="min-width: 420px; max-width: 650px; margin: 0 auto;">
+          <div class="auth-header text-center">
+            <img src="assets/images/Logo-sendbyop.png" alt="SendByOp Logo" class="auth-logo">
+            <h2 class="auth-title">Rejoindre <span>SendByOp</span></h2>
+            <p class="auth-subtitle">Créez votre compte pour envoyer ou transporter des colis</p>
+          </div>
+          
+          <div *ngIf="error" class="alert alert-danger mb-4">
+            <i class="fas fa-exclamation-circle me-2"></i> {{ error }}
+          </div>
+          
+          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="auth-form">
+            <div class="row">
+              <div class="col-md-6 mb-4">
+                <label for="firstName" class="form-label">Prénom</label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fas fa-user"></i></span>
+                  <input 
+                    type="text" 
+                    id="firstName" 
+                    formControlName="firstName" 
+                    class="form-control" 
+                    placeholder="Entrez votre prénom"
+                    [ngClass]="{ 'is-invalid': submitted && f['firstName'].errors }"
+                  >
+                </div>
+                <div *ngIf="submitted && f['firstName'].errors" class="invalid-feedback d-block mt-2">
+                  <div *ngIf="f['firstName'].errors['required']"><i class="fas fa-info-circle me-1"></i> Le prénom est requis</div>
+                </div>
+              </div>
+              
+              <div class="col-md-6 mb-4">
+                <label for="lastName" class="form-label">Nom</label>
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fas fa-user"></i></span>
+                  <input 
+                    type="text" 
+                    id="lastName" 
+                    formControlName="lastName" 
+                    class="form-control" 
+                    placeholder="Entrez votre nom"
+                    [ngClass]="{ 'is-invalid': submitted && f['lastName'].errors }"
+                  >
+                </div>
+                <div *ngIf="submitted && f['lastName'].errors" class="invalid-feedback d-block mt-2">
+                  <div *ngIf="f['lastName'].errors['required']"><i class="fas fa-info-circle me-1"></i> Le nom est requis</div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="mb-4">
+              <label for="email" class="form-label">Email</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                <input 
+                  type="email" 
+                  id="email" 
+                  formControlName="email" 
+                  class="form-control" 
+                  placeholder="Entrez votre email"
+                  [ngClass]="{ 'is-invalid': submitted && f['email'].errors }"
+                >
+              </div>
+              <div *ngIf="submitted && f['email'].errors" class="invalid-feedback d-block mt-2">
+                <div *ngIf="f['email'].errors['required']"><i class="fas fa-info-circle me-1"></i> L'email est requis</div>
+                <div *ngIf="f['email'].errors['email']"><i class="fas fa-info-circle me-1"></i> Veuillez entrer un email valide</div>
+              </div>
+            </div>
+            
+            <div class="mb-4">
+              <label for="phone" class="form-label">Téléphone</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                <input 
+                  type="tel" 
+                  id="phone" 
+                  formControlName="phone" 
+                  class="form-control" 
+                  placeholder="Entrez votre numéro de téléphone"
+                  [ngClass]="{ 'is-invalid': submitted && f['phone'].errors }"
+                >
+              </div>
+              <div *ngIf="submitted && f['phone'].errors" class="invalid-feedback d-block mt-2">
+                <div *ngIf="f['phone'].errors['required']"><i class="fas fa-info-circle me-1"></i> Le numéro de téléphone est requis</div>
+                <div *ngIf="f['phone'].errors['pattern']"><i class="fas fa-info-circle me-1"></i> Veuillez entrer un numéro de téléphone valide</div>
+              </div>
+              <small class="text-muted mt-1 d-block">
+                <i class="fas fa-shield-alt me-1"></i> Votre numéro sera vérifié par SMS pour sécuriser votre compte
+              </small>
+            </div>
+            
+            <div class="mb-4">
+              <label for="password" class="form-label">Mot de passe</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                <input 
+                  type="password" 
+                  id="password" 
+                  formControlName="password" 
+                  class="form-control" 
+                  placeholder="Créez votre mot de passe"
+                  [ngClass]="{ 'is-invalid': submitted && f['password'].errors }"
+                >
+              </div>
+              <div *ngIf="submitted && f['password'].errors" class="invalid-feedback d-block mt-2">
+                <div *ngIf="f['password'].errors['required']"><i class="fas fa-info-circle me-1"></i> Le mot de passe est requis</div>
+                <div *ngIf="f['password'].errors['minlength']"><i class="fas fa-info-circle me-1"></i> Le mot de passe doit contenir au moins 6 caractères</div>
+              </div>
+            </div>
+            
+            <div class="mb-4">
+              <label for="confirmPassword" class="form-label">Confirmer le mot de passe</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                <input 
+                  type="password" 
+                  id="confirmPassword" 
+                  formControlName="confirmPassword" 
+                  class="form-control" 
+                  placeholder="Confirmez votre mot de passe"
+                  [ngClass]="{ 'is-invalid': submitted && f['confirmPassword'].errors }"
+                >
+              </div>
+              <div *ngIf="submitted && f['confirmPassword'].errors" class="invalid-feedback d-block mt-2">
+                <div *ngIf="f['confirmPassword'].errors['required']"><i class="fas fa-info-circle me-1"></i> La confirmation du mot de passe est requise</div>
+                <div *ngIf="f['confirmPassword'].errors['mustMatch']"><i class="fas fa-info-circle me-1"></i> Les mots de passe ne correspondent pas</div>
+              </div>
+            </div>
+            
+            <div class="mb-4 form-check">
+              <input 
+                type="checkbox" 
+                class="form-check-input" 
+                id="termsAccepted" 
+                formControlName="termsAccepted"
+                [ngClass]="{ 'is-invalid': submitted && f['termsAccepted'].errors }"
+              >
+              <label class="form-check-label" for="termsAccepted">
+                J'accepte les <a href="#">conditions générales</a> et la <a href="#">politique de confidentialité</a>
+              </label>
+              <div *ngIf="submitted && f['termsAccepted'].errors" class="invalid-feedback d-block mt-2">
+                <div *ngIf="f['termsAccepted'].errors['required']"><i class="fas fa-info-circle me-1"></i> Vous devez accepter les conditions générales</div>
+              </div>
+            </div>
+            
+            <div class="d-grid gap-2 mb-4">
+              <button type="submit" class="btn btn-sendbyop btn-lg" [disabled]="loading">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+                <i *ngIf="!loading" class="fas fa-user-plus me-2"></i> Créer mon compte
+              </button>
+            </div>
+            
+            <div class="auth-links text-center">
+              <p>Vous avez déjà un compte? <a routerLink="/login"><i class="fas fa-sign-in-alt me-1"></i> Se connecter</a></p>
+            </div>
+          </form>
+          
+          <div class="social-login mt-4">
+            <div class="divider">
+              <span>Ou inscrivez-vous avec</span>
+            </div>
+            <div class="social-buttons mt-3">
+              <button class="btn btn-outline-primary me-2">
+                <i class="fab fa-google"></i>
+              </button>
+              <button class="btn btn-outline-primary me-2">
+                <i class="fab fa-facebook-f"></i>
+              </button>
+              <button class="btn btn-outline-primary">
+                <i class="fab fa-apple"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

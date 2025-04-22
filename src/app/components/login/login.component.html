@@ -1,0 +1,106 @@
+<div class="auth-container">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="auth-card">
+          <div class="auth-header text-center">
+            <img src="assets/images/Logo-sendbyop.png" alt="SendByOp Logo" class="auth-logo">
+            <h2 class="auth-title">Connexion à <span>SendByOp</span></h2>
+            <p class="auth-subtitle">Accédez à votre compte pour gérer vos envois et voyages</p>
+          </div>
+          
+          <div *ngIf="success" class="alert alert-success mb-4">
+            <i class="fas fa-check-circle me-2"></i> {{ success }}
+          </div>
+          
+          <div *ngIf="error" class="alert alert-danger mb-4">
+            <i class="fas fa-exclamation-circle me-2"></i> {{ error }}
+          </div>
+          
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form">
+            <div class="mb-4">
+              <label for="email" class="form-label">Adresse email</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                <input 
+                  type="email" 
+                  id="email" 
+                  formControlName="email" 
+                  class="form-control" 
+                  placeholder="Entrez votre email"
+                  [ngClass]="{ 'is-invalid': submitted && f['email'].errors }"
+                >
+              </div>
+              <div *ngIf="submitted && f['email'].errors" class="invalid-feedback d-block mt-2">
+                <div *ngIf="f['email'].errors['required']"><i class="fas fa-info-circle me-1"></i> L'email est requis</div>
+                <div *ngIf="f['email'].errors['email']"><i class="fas fa-info-circle me-1"></i> Veuillez entrer un email valide</div>
+              </div>
+            </div>
+            
+            <div class="mb-4">
+              <label for="password" class="form-label">Mot de passe</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                <input 
+                  type="password" 
+                  id="password" 
+                  formControlName="password" 
+                  class="form-control" 
+                  placeholder="Entrez votre mot de passe"
+                  [ngClass]="{ 'is-invalid': submitted && f['password'].errors }"
+                >
+              </div>
+              <div *ngIf="submitted && f['password'].errors" class="invalid-feedback d-block mt-2">
+                <div *ngIf="f['password'].errors['required']"><i class="fas fa-info-circle me-1"></i> Le mot de passe est requis</div>
+              </div>
+            </div>
+            
+            <div class="mb-4 form-check">
+              <input type="checkbox" class="form-check-input" id="rememberMe" formControlName="rememberMe">
+              <label class="form-check-label" for="rememberMe">Se souvenir de moi</label>
+            </div>
+            
+            <div class="d-grid gap-2 mb-4">
+              <button type="submit" class="btn btn-sendbyop btn-lg" [disabled]="loading">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+                <i *ngIf="!loading" class="fas fa-sign-in-alt me-2"></i> Se connecter
+              </button>
+            </div>
+            
+            <div class="auth-links">
+              <div class="row">
+                <div class="col-md-6 text-md-start">
+                  <a routerLink="/forgot-password">
+                    <i class="fas fa-key me-1"></i> Mot de passe oublié?
+                  </a>
+                </div>
+                <div class="col-md-6 text-md-end">
+                  <a routerLink="/register">
+                    <i class="fas fa-user-plus me-1"></i> Créer un compte
+                  </a>
+                </div>
+              </div>
+            </div>
+          </form>
+          
+          <div class="social-login mt-4">
+            <div class="divider">
+              <span>Ou connectez-vous avec</span>
+            </div>
+            <div class="social-buttons mt-3">
+              <button class="btn btn-outline-primary me-2">
+                <i class="fab fa-google"></i>
+              </button>
+              <button class="btn btn-outline-primary me-2">
+                <i class="fab fa-facebook-f"></i>
+              </button>
+              <button class="btn btn-outline-primary">
+                <i class="fab fa-apple"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,4220 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "OpenAPI definition",
+    "version": "v0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:9002/api/v1",
+      "description": "Generated server url"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Reviews",
+      "description": "API endpoints for managing reviews"
+    },
+    {
+      "name": "Airport Management",
+      "description": "APIs for managing airport information"
+    },
+    {
+      "name": "User Management",
+      "description": "APIs for managing users"
+    },
+    {
+      "name": "Visitor",
+      "description": "Visitor management APIs"
+    },
+    {
+      "name": "Phone Verification",
+      "description": "APIs for phone number verification using Twilio"
+    },
+    {
+      "name": "Booking Management",
+      "description": "APIs for managing flight bookings and reservations"
+    },
+    {
+      "name": "Stopover Management",
+      "description": "APIs for managing flight stopovers"
+    },
+    {
+      "name": "Customer Registration",
+      "description": "API endpoints for customer registration and management"
+    },
+    {
+      "name": "Refundable Bookings",
+      "description": "API endpoints for managing refundable bookings"
+    },
+    {
+      "name": "Country Management",
+      "description": "APIs for managing country information"
+    },
+    {
+      "name": "Authentication",
+      "description": "APIs for user authentication and management"
+    },
+    {
+      "name": "Refunds",
+      "description": "API endpoints for managing refunds"
+    },
+    {
+      "name": "Receivers",
+      "description": "API endpoints for managing receivers"
+    },
+    {
+      "name": "Bank Account Management",
+      "description": "APIs for managing bank account information"
+    }
+  ],
+  "paths": {
+    "/user/password/{email}": {
+      "put": {
+        "tags": [
+          "User Management"
+        ],
+        "summary": "Update user password",
+        "description": "Updates the password for a user with the specified email",
+        "operationId": "updatePassword",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "description": "Email of the user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "description": "New password for the user"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "Invalid password format",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDto"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDto"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Password successfully updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trips": {
+      "get": {
+        "tags": [
+          "flight-controller"
+        ],
+        "operationId": "getAllFlights",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FlightDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "flight-controller"
+        ],
+        "operationId": "updateFlight",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FlightDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlightDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "flight-controller"
+        ],
+        "operationId": "createFlight",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VolEscaleDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlightDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trips/validate/{id}": {
+      "put": {
+        "tags": [
+          "flight-controller"
+        ],
+        "operationId": "validateFlight",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlightDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trips/cancellation": {
+      "put": {
+        "tags": [
+          "flight-controller"
+        ],
+        "operationId": "updateCancellation",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CancellationTripDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/CancellationTripDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customer/update": {
+      "put": {
+        "tags": [
+          "Customer Registration"
+        ],
+        "summary": "Update customer details",
+        "description": "Update an existing customer's information",
+        "operationId": "updateCustomer",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomerDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Customer updated successfully",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Customer not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/bookings/{id}": {
+      "get": {
+        "tags": [
+          "Booking Management"
+        ],
+        "operationId": "getBooking",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Booking Management"
+        ],
+        "summary": "Update a booking",
+        "description": "Updates an existing booking by ID",
+        "operationId": "updateBooking",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the booking to update",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookingDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Booking updated successfully",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Booking not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Booking Management"
+        ],
+        "operationId": "deleteBooking",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/bookings/{id}/validate": {
+      "put": {
+        "tags": [
+          "Booking Management"
+        ],
+        "operationId": "validateBooking",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/bookings/{id}/reject": {
+      "put": {
+        "tags": [
+          "Booking Management"
+        ],
+        "operationId": "rejectBooking",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RejectionDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/visitors": {
+      "post": {
+        "tags": [
+          "Visitor"
+        ],
+        "summary": "Create a new visitor",
+        "description": "Creates a new visitor in the system",
+        "operationId": "addVisitor",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VisitorDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Visitor created successfully",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/VisitorDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trips/cancellation/details": {
+      "post": {
+        "tags": [
+          "flight-controller"
+        ],
+        "operationId": "getCancellationDetails",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FlightDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/CancellationTripDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trips/cancel": {
+      "post": {
+        "tags": [
+          "flight-controller"
+        ],
+        "operationId": "cancelFlight",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CancellationTripDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlightDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stopover": {
+      "post": {
+        "tags": [
+          "Stopover Management"
+        ],
+        "summary": "Create stopover",
+        "description": "Creates a new stopover for a flight",
+        "operationId": "createStopover",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StopoverDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Stopover created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StopoverDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid stopover data",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/StopoverDto"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/StopoverDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reviews": {
+      "post": {
+        "tags": [
+          "Reviews"
+        ],
+        "summary": "Create a new review",
+        "description": "Creates a new review for a transporter or shipper",
+        "operationId": "saveReview",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReviewDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Review created successfully",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reimbursement/save": {
+      "post": {
+        "tags": [
+          "Refunds"
+        ],
+        "summary": "Create a new refund",
+        "description": "Creates a new refund request for a booking",
+        "operationId": "save",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefundDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Refund created successfully",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefundDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/refundable-bookings/save": {
+      "post": {
+        "tags": [
+          "Refundable Bookings"
+        ],
+        "summary": "Create a new refundable booking",
+        "description": "Creates a new refundable booking entry",
+        "operationId": "saveRefundableBooking",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefundableBookingDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Booking created successfully",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefundableBookingDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/receiver/save": {
+      "post": {
+        "tags": [
+          "Receivers"
+        ],
+        "summary": "Create a new receiver",
+        "description": "Creates a new receiver entry in the system",
+        "operationId": "save_1",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Receiver"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Receiver created successfully",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReceiverDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/public/airport/save": {
+      "post": {
+        "tags": [
+          "Airport Management"
+        ],
+        "summary": "Create a new airport",
+        "description": "Creates a new airport entry in the system",
+        "operationId": "saveAirport",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AirportDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "Invalid airport data provided",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/AirportDto"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Airport created successfully",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/AirportDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/payment/reservation/{id}": {
+      "post": {
+        "tags": [
+          "payment-controller"
+        ],
+        "operationId": "processPayment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PaymentDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/parcels": {
+      "post": {
+        "tags": [
+          "parcel-controller"
+        ],
+        "operationId": "createParcel",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParcelDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ParcelDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/operation/save/{typeId}": {
+      "post": {
+        "tags": [
+          "operation-controller"
+        ],
+        "operationId": "saveOperation",
+        "parameters": [
+          {
+            "name": "typeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OperationDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/OperationDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/operation/booking/deposit/sender": {
+      "post": {
+        "tags": [
+          "operation-controller"
+        ],
+        "operationId": "registerSenderDeposit",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookingDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/operation/booking/deposit/customer": {
+      "post": {
+        "tags": [
+          "operation-controller"
+        ],
+        "operationId": "registerCustomerDeposit",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookingDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/note/save": {
+      "post": {
+        "tags": [
+          "note-controller"
+        ],
+        "operationId": "addNote",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RatingDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/newletter/save": {
+      "post": {
+        "tags": [
+          "newsletter-controller"
+        ],
+        "operationId": "save_2",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewsletterDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/newletter/": {
+      "post": {
+        "tags": [
+          "newsletter-controller"
+        ],
+        "operationId": "getAll",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Newsletter"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customer/verify/email/{token}": {
+      "post": {
+        "tags": [
+          "Customer Registration"
+        ],
+        "summary": "Verify email address",
+        "description": "Verify customer's email address using verification token",
+        "operationId": "verifyEmail",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "description": "Email verification token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Email verified successfully",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid or expired token",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customer/verify/customer/{token}": {
+      "post": {
+        "tags": [
+          "Customer Registration"
+        ],
+        "summary": "Get customer by verification token",
+        "description": "Retrieve customer details using verification token",
+        "operationId": "getCustomerByToken",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "description": "Verification token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Invalid or expired token",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Customer details retrieved successfully",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customer/resend/email/{email}": {
+      "post": {
+        "tags": [
+          "Customer Registration"
+        ],
+        "summary": "Resend verification email",
+        "description": "Resend the verification email to a registered customer",
+        "operationId": "resendVerificationEmail",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "description": "Customer's email address",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Email not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Verification email sent successfully",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customer/password/verify-token": {
+      "post": {
+        "tags": [
+          "Customer Registration"
+        ],
+        "summary": "Verify password reset token",
+        "description": "Verify if password reset token is valid",
+        "operationId": "verifyPasswordResetToken",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "description": "Password reset token"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Token verified successfully",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid or expired token",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customer/password/reset": {
+      "post": {
+        "tags": [
+          "Customer Registration"
+        ],
+        "summary": "Reset password",
+        "description": "Reset customer's password using reset token",
+        "operationId": "resetPassword",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "Password reset token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "description": "New password"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Password reset successfully",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token or password",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customer/password/forgot": {
+      "post": {
+        "tags": [
+          "Customer Registration"
+        ],
+        "summary": "Request password reset",
+        "description": "Send password reset email to customer",
+        "operationId": "sendPasswordResetEmail",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmailDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Password reset email sent successfully",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Email not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/country/save": {
+      "post": {
+        "tags": [
+          "Country Management"
+        ],
+        "summary": "Create a new country",
+        "description": "Creates a new country entry in the system",
+        "operationId": "saveCountry",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CountryDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "Invalid country data",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Country created successfully",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/bank-account-infos/save": {
+      "post": {
+        "tags": [
+          "Bank Account Management"
+        ],
+        "summary": "Save bank account information",
+        "description": "Creates or updates bank account information",
+        "operationId": "saveInfo",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BankInfoDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Bank account information saved successfully",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid bank account data",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/update": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "operationId": "updateUser",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/signup/admin": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Register new admin user",
+        "description": "Creates a new admin user account",
+        "operationId": "registerUser",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignUpForm"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "User registered successfully",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseMessage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid user data",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Register new customer",
+        "description": "Register a new customer and send verification email",
+        "operationId": "registerCustomer",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomerRegistrationDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "409": {
+            "description": "Email already registered",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Customer registered successfully",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Authenticate user",
+        "description": "Authenticates a user and returns a JWT token",
+        "operationId": "authenticateUser",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginForm"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully authenticated",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/JwtResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/JwtResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/delete": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "operationId": "deleteUser",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/change-pw": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Change password",
+        "description": "Initiates password change process",
+        "operationId": "changePassword",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmailDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Password change initiated successfully",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseMessage"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/test/{pw}": {
+      "post": {
+        "tags": [
+          "test-controller"
+        ],
+        "operationId": "pwTest",
+        "parameters": [
+          {
+            "name": "pw",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/phone-verification/verify/{phoneNumber}": {
+      "post": {
+        "tags": [
+          "Phone Verification"
+        ],
+        "summary": "Verify phone number",
+        "description": "Verifies the phone number using the provided verification code",
+        "operationId": "verifyPhoneNumber",
+        "parameters": [
+          {
+            "name": "phoneNumber",
+            "in": "path",
+            "description": "Phone number to verify",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "description": "Verification code received via SMS"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "Invalid verification code",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Phone number not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Phone number verified successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/phone-verification/send": {
+      "post": {
+        "tags": [
+          "Phone Verification"
+        ],
+        "summary": "Send verification code",
+        "description": "Sends a verification code to the specified phone number",
+        "operationId": "sendVerificationCode",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PhoneVerificationRequestDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Verification code sent successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid phone number format",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/bookings": {
+      "get": {
+        "tags": [
+          "Booking Management"
+        ],
+        "summary": "Get all bookings",
+        "description": "Retrieves a list of all bookings in the system",
+        "operationId": "getAllBookings",
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the list of bookings",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Booking Management"
+        ],
+        "summary": "Create a new booking",
+        "description": "Creates a new booking with associated parcels",
+        "operationId": "createBooking",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookingDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Booking created successfully",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid booking data",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/bookings/{id}/reviews": {
+      "post": {
+        "tags": [
+          "Booking Management"
+        ],
+        "operationId": "addCustomerReview",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/bookings/{id}/reviews/response": {
+      "post": {
+        "tags": [
+          "Booking Management"
+        ],
+        "operationId": "addSenderResponse",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/bookings/{id}/payment": {
+      "post": {
+        "tags": [
+          "Booking Management"
+        ],
+        "operationId": "processPayment_1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/bookings/{id}/cancel": {
+      "post": {
+        "tags": [
+          "Booking Management"
+        ],
+        "operationId": "cancelBooking",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/visitors/count": {
+      "get": {
+        "tags": [
+          "Visitor"
+        ],
+        "summary": "Get total visitor count",
+        "description": "Returns the total number of visitors",
+        "operationId": "getVisitorCount",
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved visitor count",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/list": {
+      "get": {
+        "tags": [
+          "User Management"
+        ],
+        "summary": "Get all users",
+        "description": "Retrieves a list of all registered users",
+        "operationId": "getAllUsers",
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved users list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserDto"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trips/{id}": {
+      "get": {
+        "tags": [
+          "flight-controller"
+        ],
+        "operationId": "getFlightById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlightDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trips/valid": {
+      "get": {
+        "tags": [
+          "flight-controller"
+        ],
+        "operationId": "getValidatedFlights",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FlightDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trips/reject": {
+      "get": {
+        "tags": [
+          "flight-controller"
+        ],
+        "operationId": "getRejectedFlights",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FlightDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trips/pending": {
+      "get": {
+        "tags": [
+          "flight-controller"
+        ],
+        "operationId": "getPendingFlights",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FlightDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trips/customer/{email}/flights": {
+      "get": {
+        "tags": [
+          "flight-controller"
+        ],
+        "operationId": "getCustomerFlights",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FlightDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trips/customer/flights/count/{email}": {
+      "get": {
+        "tags": [
+          "flight-controller"
+        ],
+        "operationId": "getCustomerFlightCount",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stopover/flight/{id}": {
+      "get": {
+        "tags": [
+          "Stopover Management"
+        ],
+        "summary": "Get stopovers by flight",
+        "description": "Retrieves all stopovers for a specific flight",
+        "operationId": "getStopoversByFlightId",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the flight",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved stopovers list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StopoverDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Flight not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StopoverDto"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StopoverDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reviews/transporter/{id}": {
+      "get": {
+        "tags": [
+          "Reviews"
+        ],
+        "summary": "Get reviews by transporter",
+        "description": "Retrieves all reviews for a specific transporter",
+        "operationId": "getByTransporter",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Transporter ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reviews found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No reviews found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reviews/shipper/{id}": {
+      "get": {
+        "tags": [
+          "Reviews"
+        ],
+        "summary": "Get reviews by shipper",
+        "description": "Retrieves all reviews for a specific shipper",
+        "operationId": "getByShipper",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Shipper ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reviews found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No reviews found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reimbursement/reservation/{id}": {
+      "get": {
+        "tags": [
+          "Refunds"
+        ],
+        "summary": "Get refund by reservation",
+        "description": "Retrieves refund details for a specific reservation",
+        "operationId": "getByReservation",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Reservation ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Refund found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefundDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Refund not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reimbursement/list": {
+      "get": {
+        "tags": [
+          "Refunds"
+        ],
+        "summary": "Get all refunds",
+        "description": "Retrieves a list of all refund requests",
+        "operationId": "getAllRefunds",
+        "responses": {
+          "200": {
+            "description": "List of refunds retrieved successfully",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefundDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/refundable-bookings/{id}": {
+      "get": {
+        "tags": [
+          "Refundable Bookings"
+        ],
+        "summary": "Get refundable booking by ID",
+        "description": "Retrieves a specific refundable booking by its ID",
+        "operationId": "getRefundableBooking",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Booking ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Booking found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookingDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Booking not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Refundable Bookings"
+        ],
+        "summary": "Delete a refundable booking",
+        "description": "Deletes a refundable booking by its ID",
+        "operationId": "deleteRefundableBooking",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Booking ID",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Booking deleted successfully",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Booking not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/refundable-bookings/list": {
+      "get": {
+        "tags": [
+          "Refundable Bookings"
+        ],
+        "summary": "Get all refundable bookings",
+        "description": "Retrieves a list of all refundable bookings",
+        "operationId": "getAllRefundableBookings",
+        "responses": {
+          "200": {
+            "description": "List of refundable bookings retrieved successfully",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefundableBookingDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/public/airport/{id}": {
+      "get": {
+        "tags": [
+          "Airport Management"
+        ],
+        "summary": "Get airport by ID",
+        "description": "Retrieves airport information by its ID",
+        "operationId": "getAirport",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the airport to retrieve",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the airport",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/AirportDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Airport not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/AirportDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/public/airport/": {
+      "get": {
+        "tags": [
+          "Airport Management"
+        ],
+        "summary": "Get all airports",
+        "description": "Retrieves a list of all airports in the system",
+        "operationId": "getAllAirports",
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the list of airports",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AirportDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/payment/{email}": {
+      "get": {
+        "tags": [
+          "payment-controller"
+        ],
+        "operationId": "getPaymentsByClient",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/payment/": {
+      "get": {
+        "tags": [
+          "payment-controller"
+        ],
+        "operationId": "getAllPayments",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/parcels/bookings/{id}": {
+      "get": {
+        "tags": [
+          "parcel-controller"
+        ],
+        "operationId": "getParcelsForBooking",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ParcelDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/operation/{id}": {
+      "get": {
+        "tags": [
+          "operation-controller"
+        ],
+        "operationId": "getOperation",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/OperationDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "operation-controller"
+        ],
+        "operationId": "deleteOperation",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/note/{id}": {
+      "get": {
+        "tags": [
+          "note-controller"
+        ],
+        "operationId": "getNote",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customer/": {
+      "get": {
+        "tags": [
+          "Customer Registration"
+        ],
+        "summary": "Get all customers",
+        "description": "Retrieves a list of all registered customers",
+        "operationId": "getAllCustomers",
+        "responses": {
+          "200": {
+            "description": "List of customers retrieved successfully",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomerDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/country/": {
+      "get": {
+        "tags": [
+          "Country Management"
+        ],
+        "summary": "Get all countries",
+        "description": "Retrieves a list of all countries in the system",
+        "operationId": "getAllCountry",
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the list of countries",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/bank-account-infos/{id}": {
+      "get": {
+        "tags": [
+          "Bank Account Management"
+        ],
+        "summary": "Get bank account information",
+        "description": "Retrieves bank account information by ID",
+        "operationId": "getInfoIban",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the bank account information",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved bank account information",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Bank account information not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/email/{email}": {
+      "get": {
+        "tags": [
+          "Authentication"
+        ],
+        "operationId": "getUserByEmail",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/statistics/dashboard": {
+      "get": {
+        "tags": [
+          "statistics-controller"
+        ],
+        "operationId": "getDashboardStatistics",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/bookings/{id}/sender/whatsapp": {
+      "get": {
+        "tags": [
+          "Booking Management"
+        ],
+        "operationId": "getSenderWhatsAppLink",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/bookings/{id}/cancellation": {
+      "get": {
+        "tags": [
+          "Booking Management"
+        ],
+        "operationId": "getBookingCancellation",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/bookings/senders/{email}": {
+      "get": {
+        "tags": [
+          "Booking Management"
+        ],
+        "operationId": "getBookingsBySender",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/bookings/receivers/{email}": {
+      "get": {
+        "tags": [
+          "Booking Management"
+        ],
+        "operationId": "getBookingsByReceiver",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/bookings/flights/{flightId}": {
+      "get": {
+        "tags": [
+          "Booking Management"
+        ],
+        "operationId": "getBookingsByFlight",
+        "parameters": [
+          {
+            "name": "flightId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stopover/{id}": {
+      "delete": {
+        "tags": [
+          "Stopover Management"
+        ],
+        "summary": "Delete stopover",
+        "description": "Deletes a stopover by its ID",
+        "operationId": "deleteStopover",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the stopover to delete",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Stopover not found"
+          },
+          "204": {
+            "description": "Stopover deleted successfully"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/parcels/{id}": {
+      "delete": {
+        "tags": [
+          "parcel-controller"
+        ],
+        "operationId": "deleteParcel",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "UserDto": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "roleId": {
+            "type": "string"
+          }
+        }
+      },
+      "FlightDto": {
+        "required": [
+          "arrivalAirportId",
+          "arrivalDate",
+          "departureAirportId",
+          "departureDate"
+        ],
+        "type": "object",
+        "properties": {
+          "flightId": {
+            "type": "integer",
+            "description": "Unique identifier for the flight",
+            "format": "int32",
+            "example": 1
+          },
+          "arrivalDate": {
+            "type": "string",
+            "description": "Date of flight arrival",
+            "format": "date-time"
+          },
+          "departureDate": {
+            "type": "string",
+            "description": "Date of flight departure",
+            "format": "date-time"
+          },
+          "arrivalTime": {
+            "type": "string",
+            "description": "Time of flight arrival",
+            "example": "15:30"
+          },
+          "departureTime": {
+            "type": "string",
+            "description": "Time of flight departure",
+            "example": "10:30"
+          },
+          "amountPerKg": {
+            "type": "integer",
+            "description": "Cost per kilogram for shipping",
+            "format": "int32",
+            "example": 10
+          },
+          "kgCount": {
+            "type": "integer",
+            "description": "Total weight capacity in kilograms",
+            "format": "int32",
+            "example": 100
+          },
+          "departureAirportId": {
+            "type": "integer",
+            "description": "ID of the departure airport",
+            "format": "int32",
+            "example": 1
+          },
+          "arrivalAirportId": {
+            "type": "integer",
+            "description": "ID of the arrival airport",
+            "format": "int32",
+            "example": 2
+          },
+          "clientId": {
+            "type": "integer",
+            "description": "ID of the client associated with the flight",
+            "format": "int32",
+            "example": 1
+          },
+          "validationStatus": {
+            "type": "integer",
+            "description": "Status of flight validation (0: Pending, 1: Validated, 2: Rejected)",
+            "format": "int32",
+            "example": 1
+          },
+          "preference": {
+            "type": "string",
+            "description": "Special preferences or requirements for the flight",
+            "example": "Fragile items only"
+          },
+          "publicationDate": {
+            "type": "string",
+            "description": "Date when the flight was published",
+            "format": "date-time"
+          },
+          "image": {
+            "type": "string",
+            "description": "URL or path to flight-related image",
+            "example": "flight123.jpg"
+          },
+          "depositLocation": {
+            "type": "string",
+            "description": "Location where items should be deposited",
+            "example": "Terminal 2, Counter 5"
+          },
+          "receptionLocation": {
+            "type": "string",
+            "description": "Location where items can be received",
+            "example": "Terminal 1, Baggage Claim 3"
+          },
+          "cancelled": {
+            "type": "integer",
+            "description": "Flight cancellation status (0: Active, 1: Cancelled)",
+            "format": "int32",
+            "example": 0
+          }
+        },
+        "description": "DTO for flight information"
+      },
+      "CancellationTripDto": {
+        "type": "object",
+        "properties": {
+          "cancellationId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "cancellationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "tripId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "viewed": {
+            "type": "boolean"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "updatedBy": {
+            "type": "string"
+          }
+        }
+      },
+      "CustomerDto": {
+        "type": "object",
+        "properties": {
+          "nationalIdNumber": {
+            "type": "integer",
+            "description": "National identification number of the customer",
+            "format": "int32",
+            "example": 123456789
+          },
+          "firstName": {
+            "type": "string",
+            "description": "First name of the customer",
+            "example": "John"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Last name of the customer",
+            "example": "Doe"
+          },
+          "phoneNumber": {
+            "type": "string",
+            "description": "Phone number of the customer",
+            "example": "+1234567890"
+          },
+          "email": {
+            "type": "string"
+          },
+          "profilePicture": {
+            "type": "string"
+          },
+          "registrationStatus": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "emailVerified": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "phoneVerified": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "whatsappLink": {
+            "type": "string"
+          },
+          "registrationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "country": {
+            "type": "string"
+          },
+          "identityUploaded": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "identityVerified": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "address": {
+            "type": "string"
+          }
+        },
+        "description": "DTO for customer information"
+      },
+      "BookingDto": {
+        "required": [
+          "bookingDate",
+          "customerId",
+          "flightId",
+          "receiverId"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier for the booking",
+            "format": "int32",
+            "example": 1
+          },
+          "bookingDate": {
+            "type": "string",
+            "description": "Date when the booking was made",
+            "format": "date-time"
+          },
+          "bookingTime": {
+            "type": "string",
+            "description": "Time of the booking",
+            "example": "14:30"
+          },
+          "paymentStatus": {
+            "type": "integer",
+            "description": "Payment status of the booking (0: Pending, 1: Paid, 2: Failed)",
+            "format": "int32",
+            "example": 1
+          },
+          "expeditionStatus": {
+            "type": "integer",
+            "description": "Status of the expedition (0: Pending, 1: In Progress, 2: Completed)",
+            "format": "int32",
+            "example": 1
+          },
+          "customerReview": {
+            "type": "string",
+            "description": "Review provided by the customer",
+            "example": "Great service!"
+          },
+          "senderReview": {
+            "type": "string",
+            "description": "Review provided by the sender",
+            "example": "Excellent handling"
+          },
+          "senderReceptionStatus": {
+            "type": "integer",
+            "description": "Reception status from sender's side (0: Pending, 1: Received)",
+            "format": "int32",
+            "example": 1
+          },
+          "customerReceptionStatus": {
+            "type": "integer",
+            "description": "Reception status from customer's side (0: Pending, 1: Received)",
+            "format": "int32",
+            "example": 1
+          },
+          "receiverId": {
+            "type": "integer",
+            "description": "ID of the receiver",
+            "format": "int32",
+            "example": 1
+          },
+          "flightId": {
+            "type": "integer",
+            "description": "ID of the associated flight",
+            "format": "int32",
+            "example": 1
+          },
+          "customerId": {
+            "type": "integer",
+            "description": "ID of the customer who made the booking",
+            "format": "int32",
+            "example": 1
+          },
+          "cancelled": {
+            "type": "integer",
+            "description": "Booking cancellation status (0: Active, 1: Cancelled)",
+            "format": "int32",
+            "example": 0
+          },
+          "transporterPaymentStatus": {
+            "type": "integer",
+            "description": "Payment status for the transporter (0: Pending, 1: Paid)",
+            "format": "int32",
+            "example": 1
+          },
+          "parcelIds": {
+            "type": "array",
+            "description": "List of parcels associated with this booking",
+            "items": {
+              "$ref": "#/components/schemas/ParcelDto"
+            }
+          }
+        },
+        "description": "DTO for booking information"
+      },
+      "ParcelDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "description": {
+            "type": "string"
+          },
+          "weightKg": {
+            "type": "number",
+            "format": "float"
+          },
+          "parcelType": {
+            "type": "string"
+          },
+          "reservationId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "description": "List of parcels associated with this booking"
+      },
+      "RejectionDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "reservationId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "VisitorDto": {
+        "required": [
+          "visitDate"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier for the visitor",
+            "format": "int32",
+            "example": 1
+          },
+          "visitDate": {
+            "type": "string",
+            "description": "Date and time of the visit",
+            "format": "date-time"
+          },
+          "ipAddress": {
+            "type": "string",
+            "description": "IP address of the visitor",
+            "example": "192.168.1.1"
+          },
+          "userAgent": {
+            "type": "string",
+            "description": "User agent string of the visitor's browser",
+            "example": "Mozilla/5.0"
+          },
+          "referrer": {
+            "type": "string",
+            "description": "Referrer URL of the visit",
+            "example": "https://example.com"
+          }
+        },
+        "description": "DTO for visitor information"
+      },
+      "StopoverDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "hour": {
+            "type": "string"
+          },
+          "airportId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "flightId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "VolEscaleDto": {
+        "type": "object",
+        "properties": {
+          "vol": {
+            "$ref": "#/components/schemas/FlightDto"
+          },
+          "escales": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StopoverDto"
+            }
+          }
+        }
+      },
+      "ReviewDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "rating": {
+            "type": "string"
+          },
+          "opinion": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "transporterId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "shipperId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "RefundDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "reservationId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "RefundableBookingDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "bookingId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "validated": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "Receiver": {
+        "type": "object",
+        "properties": {
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "updatedBy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          }
+        },
+        "description": "Receiver details"
+      },
+      "ReceiverDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          }
+        }
+      },
+      "AirportDto": {
+        "required": [
+          "cityId",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "airportId": {
+            "type": "integer",
+            "description": "Unique identifier for the airport",
+            "format": "int32",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the airport",
+            "example": "John F. Kennedy International Airport"
+          },
+          "cityId": {
+            "type": "integer",
+            "description": "ID of the city where airport is located",
+            "format": "int32",
+            "example": 1
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "Username who created the airport record",
+            "example": "admin"
+          },
+          "updatedBy": {
+            "type": "string",
+            "description": "Username who last updated the airport record",
+            "example": "admin"
+          },
+          "iataCode": {
+            "type": "string",
+            "description": "IATA code of the airport",
+            "example": "JFK"
+          }
+        },
+        "description": "DTO for airport information"
+      },
+      "PaymentDto": {
+        "type": "object",
+        "properties": {
+          "paymentId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "paymentDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "clientId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "amount": {
+            "type": "number",
+            "format": "double"
+          },
+          "paymentTypeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "updatedBy": {
+            "type": "string"
+          }
+        }
+      },
+      "OperationDto": {
+        "required": [
+          "operationDate",
+          "operationTypeId",
+          "reservationId"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier for the operation",
+            "format": "int32",
+            "example": 1
+          },
+          "operationDate": {
+            "type": "string",
+            "description": "Date when the operation was performed",
+            "format": "date-time"
+          },
+          "operationTypeId": {
+            "type": "integer",
+            "description": "Identifier of the operation type",
+            "format": "int32",
+            "example": 1
+          },
+          "reservationId": {
+            "type": "integer",
+            "description": "Identifier of the associated reservation",
+            "format": "int32",
+            "example": 1
+          }
+        },
+        "description": "DTO for operation information"
+      },
+      "RatingDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "score": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "senderId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "customerId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "NewsletterDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "email": {
+            "type": "string"
+          }
+        }
+      },
+      "Newsletter": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "email": {
+            "type": "string"
+          }
+        }
+      },
+      "EmailDto": {
+        "type": "object",
+        "properties": {
+          "to": {
+            "type": "string",
+            "description": "Email recipient address",
+            "example": "user@example.com"
+          },
+          "body": {
+            "type": "string",
+            "description": "Email message content",
+            "example": "This is the email body content"
+          },
+          "topic": {
+            "type": "string",
+            "description": "Email subject line",
+            "example": "Important Notification"
+          }
+        },
+        "description": "Customer's email"
+      },
+      "CountryDto": {
+        "type": "object",
+        "properties": {
+          "countryId": {
+            "type": "integer",
+            "description": "Unique identifier for the country",
+            "format": "int32",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the country",
+            "example": "France"
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "Username who created the country record",
+            "example": "admin"
+          },
+          "updatedBy": {
+            "type": "string",
+            "description": "Username who last updated the country record",
+            "example": "admin"
+          }
+        },
+        "description": "DTO for country information"
+      },
+      "BankInfoDto": {
+        "required": [
+          "accountHolder",
+          "bankAccount",
+          "bankName",
+          "clientId",
+          "iban"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier for the bank information",
+            "format": "int32",
+            "example": 1
+          },
+          "clientId": {
+            "type": "integer",
+            "description": "ID of the client associated with the bank account",
+            "format": "int32",
+            "example": 1
+          },
+          "iban": {
+            "type": "string",
+            "description": "International Bank Account Number",
+            "example": "DE89370400440532013000"
+          },
+          "countryName": {
+            "type": "string",
+            "description": "Name of the country where the bank account is located",
+            "example": "Germany"
+          },
+          "bankAccount": {
+            "type": "string",
+            "description": "Bank account number",
+            "example": "1234567890"
+          },
+          "bankName": {
+            "type": "string",
+            "description": "Name of the bank",
+            "example": "Deutsche Bank"
+          },
+          "bic": {
+            "type": "string",
+            "description": "Bank Identifier Code (SWIFT)",
+            "example": "DEUTDEFF"
+          },
+          "accountHolder": {
+            "type": "string",
+            "description": "Name of the account holder",
+            "example": "John Doe"
+          }
+        },
+        "description": "DTO for bank account information"
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "username": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          }
+        }
+      },
+      "SignUpForm": {
+        "required": [
+          "lastName",
+          "name",
+          "pw",
+          "role",
+          "username"
+        ],
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "pw": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          }
+        }
+      },
+      "ResponseMessage": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "CustomerRegistrationDto": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "phoneNumber": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          }
+        },
+        "description": "Customer registration details"
+      },
+      "LoginForm": {
+        "required": [
+          "password",
+          "username"
+        ],
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "GrantedAuthority": {
+        "type": "object",
+        "properties": {
+          "authority": {
+            "type": "string"
+          }
+        }
+      },
+      "JwtResponse": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string"
+          },
+          "refreshToken": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          },
+          "authorities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GrantedAuthority"
+            }
+          }
+        }
+      },
+      "PhoneVerificationRequestDto": {
+        "required": [
+          "phoneNumber"
+        ],
+        "type": "object",
+        "properties": {
+          "phoneNumber": {
+            "pattern": "^\\+?[1-9]\\d{1,14}$",
+            "type": "string"
+          }
+        },
+        "description": "Phone number verification request"
+      }
+    }
+  }
+}

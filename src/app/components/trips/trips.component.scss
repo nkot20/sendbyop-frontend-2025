@@ -1,0 +1,424 @@
+// Variables
+$primary-color: #1a73e8;
+$secondary-color: #FF6D1B;
+$white: #ffffff;
+$light-gray: #f8f9fa;
+$dark-color: #333333;
+$gradient-start: #1a73e8;
+$gradient-end: #0d47a1;
+$box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+$border-radius: 12px;
+
+.trips-page {
+  padding: 80px 0;
+  background-color: $light-gray;
+  
+  .section-header {
+    margin-bottom: 50px;
+  }
+}
+
+// Styles pour le formulaire de recherche
+.search-container {
+  margin-bottom: 40px;
+  
+  .search-card {
+    background-color: $white;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+    padding: 30px;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    }
+    
+    form {
+      .form-label {
+        font-weight: 500;
+        color: $dark-color;
+        margin-bottom: 8px;
+      }
+      
+      .input-group {
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        border-radius: 8px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        
+        &:focus-within {
+          box-shadow: 0 5px 15px rgba($primary-color, 0.1);
+        }
+        
+        .input-group-text {
+          background-color: $primary-color;
+          color: $white;
+          border-color: $primary-color;
+          border-radius: 8px 0 0 8px;
+          width: 45px;
+          display: flex;
+          justify-content: center;
+        }
+        
+        .form-control {
+          border-radius: 0 8px 8px 0;
+          padding: 12px 15px;
+          border: 1px solid rgba(0, 0, 0, 0.1);
+          transition: all 0.3s ease;
+          
+          &:focus {
+            box-shadow: none;
+            border-color: $primary-color;
+          }
+        }
+      }
+      
+      .btn-sendbyop {
+        padding: 12px 20px;
+        font-weight: 600;
+        border-radius: 30px;
+        transition: all 0.3s ease;
+        
+        &:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 10px 20px rgba($secondary-color, 0.2);
+        }
+      }
+    }
+  }
+}
+
+// Styles pour les filtres et le tri
+.filter-sort-container {
+  margin-bottom: 30px;
+  
+  .form-label {
+    font-weight: 500;
+    color: $dark-color;
+  }
+  
+  .form-select {
+    border-radius: 8px;
+    padding: 10px 15px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    max-width: 200px;
+    
+    &:focus {
+      box-shadow: 0 5px 15px rgba($primary-color, 0.1);
+      border-color: $primary-color;
+    }
+  }
+  
+  .badge {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 30px;
+  }
+  
+  .btn-group {
+    .btn {
+      padding: 8px 12px;
+      border-radius: 8px;
+      margin-left: 5px;
+      transition: all 0.3s ease;
+      
+      &:hover, &.active {
+        background-color: $primary-color;
+        color: $white;
+        border-color: $primary-color;
+      }
+    }
+  }
+}
+
+// Styles pour les cartes de voyage
+.trip-card {
+  border: none;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  transition: all 0.4s ease;
+  overflow: hidden;
+  margin-bottom: 30px;
+  
+  &:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  }
+  
+  .trip-header {
+    padding: 15px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    
+    .rounded-circle {
+      border: 3px solid $white;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .badge {
+      padding: 6px 10px;
+      font-weight: 500;
+      border-radius: 30px;
+    }
+  }
+  
+  .trip-body {
+    padding: 20px;
+  }
+  
+  .trip-route {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    
+    .trip-city {
+      font-weight: 600;
+      font-size: 1.1rem;
+      
+      small {
+        font-size: 0.85rem;
+        color: rgba($dark-color, 0.6);
+      }
+    }
+    
+    .trip-route-line {
+      flex-grow: 1;
+      height: 2px;
+      background: linear-gradient(to right, $primary-color, $secondary-color);
+      margin: 0 15px;
+      position: relative;
+      
+      &::before, &::after {
+        content: '';
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: $primary-color;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      
+      &::before {
+        left: 0;
+      }
+      
+      &::after {
+        right: 0;
+        background: $secondary-color;
+      }
+    }
+  }
+  
+  .trip-details {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+    
+    .trip-detail-item {
+      .detail-label {
+        font-size: 0.8rem;
+        color: rgba($dark-color, 0.6);
+      }
+      
+      .detail-value {
+        font-weight: 600;
+        font-size: 0.95rem;
+      }
+    }
+  }
+  
+  .trip-baggage {
+    display: flex;
+    align-items: center;
+    background-color: rgba($primary-color, 0.05);
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    
+    i {
+      font-size: 1.5rem;
+      color: $primary-color;
+      margin-right: 15px;
+    }
+    
+    .baggage-info {
+      .baggage-weight {
+        font-weight: 600;
+      }
+      
+      .baggage-price {
+        color: $secondary-color;
+        font-weight: 700;
+      }
+    }
+  }
+  
+  .trip-footer {
+    padding: 15px;
+    background-color: rgba($light-gray, 0.5);
+    
+    .btn-sendbyop {
+      background: $secondary-color;
+      border-color: $secondary-color;
+      border-radius: 30px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        background: darken($secondary-color, 5%);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba($secondary-color, 0.3);
+      }
+    }
+  }
+}
+
+// Styles pour la pagination
+.pagination-container {
+  margin: 40px 0;
+  
+  .pagination {
+    .page-item {
+      margin: 0 3px;
+      
+      .page-link {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        color: $dark-color;
+        border: none;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+        
+        &:hover {
+          background-color: rgba($primary-color, 0.1);
+          color: $primary-color;
+        }
+      }
+      
+      &.active .page-link {
+        background-color: $primary-color;
+        color: $white;
+      }
+      
+      &.disabled .page-link {
+        background-color: rgba($light-gray, 0.5);
+        color: rgba($dark-color, 0.4);
+      }
+    }
+  }
+}
+
+// Styles pour le message "aucun résultat"
+.no-results {
+  background-color: $white;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  padding: 50px 20px;
+  margin: 30px 0;
+  
+  h3 {
+    color: $dark-color;
+    margin-bottom: 15px;
+    font-weight: 600;
+  }
+  
+  p {
+    color: rgba($dark-color, 0.7);
+    margin-bottom: 20px;
+  }
+  
+  .btn-outline-sendbyop {
+    padding: 10px 20px;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba($secondary-color, 0.15);
+    }
+  }
+}
+
+// Styles pour le CTA
+.cta-container {
+  margin-top: 50px;
+  
+  .cta-content {
+    background: linear-gradient(135deg, $gradient-start, $gradient-end);
+    color: $white;
+    border-radius: $border-radius;
+    padding: 40px;
+    box-shadow: $box-shadow;
+    position: relative;
+    overflow: hidden;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 40%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 0% 100%);
+    }
+    
+    .cta-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+    
+    .cta-text {
+      font-size: 1.1rem;
+      margin-bottom: 25px;
+      opacity: 0.9;
+    }
+    
+    .btn-cta {
+      background: $secondary-color;
+      border-color: $secondary-color;
+      padding: 12px 30px;
+      border-radius: 30px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        background: darken($secondary-color, 5%);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+      }
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .search-container .search-card {
+    padding: 20px;
+  }
+  
+  .filter-sort-container {
+    .col-md-6:last-child {
+      margin-top: 15px;
+      text-align: left !important;
+    }
+  }
+  
+  .trip-card .trip-details {
+    grid-template-columns: repeat(2, 1fr);
+    
+    .trip-detail-item:last-child {
+      grid-column: span 2;
+    }
+  }
+}

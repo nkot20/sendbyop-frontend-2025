@@ -1,0 +1,51 @@
+<!-- Modern Floating Chatbot -->
+<div class="modern-chatbot" [class.open]="isOpen">
+  <div class="chatbot-toggle" (click)="toggleChatbot()">
+    <img src="assets/images/chatboot.png" alt="Bot" class="chatbot-fab" />
+    <span *ngIf="!isOpen" class="chatbot-badge">1</span>
+  </div>
+  <div class="chatbot-window" *ngIf="isOpen">
+    <div class="chatbot-header">
+      <img src="assets/images/logo-sendbyop.jpeg" alt="Bot" class="chatbot-avatar" />
+      <div class="chatbot-title">SendByOp Assistant</div>
+      <button class="chatbot-close" (click)="toggleChatbot()" aria-label="Fermer le chat"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="chatbot-body" #chatBody>
+      <div *ngFor="let msg of messages" [ngClass]="{'from-bot': msg.from === 'bot', 'from-user': msg.from === 'user'}" class="chatbot-bubble">
+        <img *ngIf="msg.from==='bot'" src="assets/images/logo-sendbyop.jpeg" class="bubble-avatar" alt="Bot" />
+        <div class="bubble-content">
+          <span class="bubble-text">{{ msg.text }}</span>
+          <span class="bubble-time">{{ formatTime(msg.timestamp) }}</span>
+        </div>
+        <img *ngIf="msg.from==='user'" src="assets/images/chatboot.png" class="bubble-avatar user" alt="Moi" />
+      </div>
+      
+      <!-- Indicateur de frappe -->
+      <div *ngIf="isTyping" class="typing-indicator">
+        <div class="typing-bubble"></div>
+        <div class="typing-bubble"></div>
+        <div class="typing-bubble"></div>
+      </div>
+    </div>
+    
+    <!-- Réponses rapides -->
+    <div class="quick-replies" *ngIf="messages.length <= 2">
+      <div class="quick-replies-title">Questions fréquentes :</div>
+      <div class="quick-reply-buttons">
+        <button *ngFor="let reply of quickReplies" 
+                class="quick-reply-btn"
+                (click)="selectQuickReply(reply.id)">
+          {{ reply.text }}
+        </button>
+      </div>
+    </div>
+    
+    <!-- Barre de saisie -->
+    <form class="chatbot-input-row" (submit)="sendMessage();$event.preventDefault()">
+      <input [(ngModel)]="userInput" name="chatInput" autocomplete="off" placeholder="Écrivez votre message..." (keydown.enter)="sendMessage()" />
+      <button type="submit" [disabled]="!userInput.trim()">
+        <i class="fas fa-paper-plane"></i>
+      </button>
+    </form>
+  </div>
+</div>

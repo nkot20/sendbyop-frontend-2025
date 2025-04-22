@@ -1,0 +1,717 @@
+/* Variables de couleurs */
+$primary-color: #1a73e8;  // Bleu moderne principal
+$secondary-color: #FF6D1B; // Orange SendByOp (conservé comme accent)
+$accent-color: #222222;    // Noir profond pour contraste
+$dark-color: #333333;      // Texte foncé
+$light-color: #f8f9fa;     // Fond clair
+$white: #ffffff;           // Blanc
+$error-color: #dc3545;     // Rouge pour les erreurs
+$gradient-start: #1a73e8;  // Début du dégradé
+$gradient-end: #0d47a1;    // Fin du dégradé
+$box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); // Ombre standard
+$border-radius: 12px;      // Rayon de bordure standard
+
+/* Styles globaux */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: $dark-color;
+  background-color: $light-color;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* Styles des titres de section */
+.section-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  position: relative;
+  display: inline-block;
+  color: $dark-color;
+  font-family: 'Poppins', sans-serif;
+  letter-spacing: 0.5px;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 3px;
+    background: $secondary-color;
+    border-radius: 3px;
+  }
+}
+
+.section-subtitle {
+  font-size: 1.1rem;
+  color: rgba($dark-color, 0.7);
+  margin-bottom: 2.5rem;
+}
+
+/* Styles des boutons personnalisés */
+.btn-sendbyop {
+  background-color: $secondary-color;
+  color: $white;
+  border: none;
+  transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  border-radius: 30px;
+  padding: 12px 32px;
+  letter-spacing: 0.5px;
+  box-shadow: 0 5px 15px rgba($secondary-color, 0.15);
+  
+  &:hover {
+    background-color: darken($secondary-color, 8%);
+    color: $white;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba($secondary-color, 0.2);
+  }
+}
+
+.btn-outline-sendbyop {
+  background-color: transparent;
+  color: $secondary-color;
+  border: 2px solid $secondary-color;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  border-radius: 30px;
+  padding: 12px 32px;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background-color: $secondary-color;
+    color: $white;
+    border-color: $secondary-color;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba($secondary-color, 0.15);
+  }
+}
+
+.btn-cta {
+  background: $secondary-color;
+  border-color: $secondary-color;
+  padding: 12px 30px;
+  border-radius: 30px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background: darken($secondary-color, 5%);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  }
+}
+
+/* Liens principaux */
+a, .nav-link {
+  color: $primary-color;
+  text-decoration: none !important;
+  transition: all 0.3s ease;
+  
+  &:hover, &:focus, &:active {
+    color: darken($primary-color, 10%);
+    text-decoration: none !important;
+  }
+}
+
+/* Styles des formulaires */
+.form-control {
+  border-radius: 8px;
+  padding: 12px 15px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  
+  &:focus {
+    border-color: $primary-color;
+    box-shadow: 0 0 0 0.25rem rgba($primary-color, 0.25);
+  }
+}
+
+.form-label {
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: $dark-color;
+}
+
+/* Styles des cartes */
+.card {
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  border: none;
+  transition: all 0.4s ease;
+  overflow: hidden;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.card.feature-card, .card.trip-card {
+  border-radius: $border-radius;
+  border: none;
+  box-shadow: $box-shadow;
+  
+  &:hover {
+    transform: translateY(-10px);
+  }
+}
+
+.trip-card .card-img-top {
+  border-top-left-radius: $border-radius;
+  border-top-right-radius: $border-radius;
+  max-height: 180px;
+  object-fit: cover;
+}
+
+/* Styles pour les pages d'authentification */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 120px);
+  padding: 40px 0;
+  background: linear-gradient(135deg, rgba($gradient-start, 0.03), rgba($gradient-end, 0.05));
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 450px;
+  background-color: $white;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  padding: 40px;
+  transition: all 0.4s ease;
+  
+  &:hover {
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.auth-logo {
+  height: 70px;
+  margin-bottom: 20px;
+  transition: all 0.4s ease;
+  
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.auth-title {
+  font-size: 1.75rem;
+  color: $dark-color;
+  margin-bottom: 15px;
+  font-weight: 700;
+  
+  span {
+    color: $secondary-color;
+  }
+}
+
+.auth-links {
+  text-align: center;
+  margin-top: 25px;
+  
+  a {
+    color: $primary-color;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      color: $secondary-color;
+      text-decoration: none;
+    }
+  }
+}
+
+/* Styles pour la page d'accueil */
+.hero {
+  background: linear-gradient(135deg, $gradient-start, $gradient-end);
+  color: $white;
+  padding: 100px 0 120px;
+  position: relative;
+  overflow: hidden;
+  
+  .hero-image {
+    max-width: 420px;
+    filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.2));
+  }
+}
+
+.hero-title {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 20px;
+  line-height: 1.2;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+  .highlight {
+    color: $secondary-color;
+  }
+}
+
+.hero-subtitle {
+  font-size: 1.3rem;
+  margin-bottom: 30px;
+  opacity: 0.95;
+  line-height: 1.6;
+}
+
+/* Styles pour les cartes de fonctionnalités */
+.feature-card {
+  text-align: center;
+  padding: 30px;
+  transition: all 0.4s ease;
+  
+  &:hover {
+    transform: translateY(-10px);
+    
+    .feature-icon {
+      transform: scale(1.1) rotate(5deg);
+    }
+  }
+  
+  .feature-icon {
+    font-size: 3rem;
+    color: $secondary-color;
+    margin: 20px 0;
+    transition: all 0.4s ease;
+    display: inline-block;
+  }
+  
+  .feature-title {
+    font-size: 1.5rem;
+    margin: 15px 0;
+    color: $dark-color;
+    font-weight: 700;
+  }
+  
+  .feature-description {
+    color: rgba($dark-color, 0.7);
+    margin-bottom: 20px;
+  }
+}
+
+/* Styles pour les étapes */
+.step-card {
+  position: relative;
+  padding: 40px 20px;
+  background-color: $white;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  transition: all 0.4s ease;
+  z-index: 1;
+  
+  &:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    
+    .step-icon {
+      transform: scale(1.1);
+      color: $secondary-color;
+    }
+  }
+}
+
+.step-number {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, $gradient-start, $gradient-end);
+  color: $white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+  box-shadow: 0 5px 15px rgba($primary-color, 0.3);
+}
+
+.step-icon {
+  font-size: 2.5rem;
+  color: $primary-color;
+  margin: 15px 0;
+  transition: all 0.4s ease;
+}
+
+.step-title {
+  font-size: 1.3rem;
+  margin: 15px 0;
+  color: $dark-color;
+  font-weight: 700;
+}
+
+/* Styles pour les voyages */
+.trip-route {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  
+  .trip-city {
+    font-weight: 600;
+    font-size: 1.1rem;
+    
+    small {
+      font-size: 0.85rem;
+    }
+  }
+  
+  .trip-route-line {
+    flex-grow: 1;
+    height: 2px;
+    background: linear-gradient(to right, $primary-color, $secondary-color);
+    margin: 0 15px;
+    position: relative;
+    
+    &::before, &::after {
+      content: '';
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: $primary-color;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    
+    &::before {
+      left: 0;
+    }
+    
+    &::after {
+      right: 0;
+      background: $secondary-color;
+    }
+  }
+}
+
+/* Styles pour les témoignages */
+.testimonial-card {
+  border: none;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  transition: all 0.4s ease;
+  overflow: hidden;
+  
+  &:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.testimonial-rating {
+  color: #ffc107;
+  margin-bottom: 15px;
+}
+
+.testimonial-text {
+  font-style: italic;
+  color: rgba($dark-color, 0.7);
+  margin-bottom: 20px;
+  position: relative;
+  padding: 0 20px;
+  
+  &::before, &::after {
+    content: '"';
+    font-size: 3rem;
+    color: rgba($primary-color, 0.1);
+    position: absolute;
+    line-height: 1;
+  }
+  
+  &::before {
+    top: -10px;
+    left: 0;
+  }
+  
+  &::after {
+    bottom: -30px;
+    right: 0;
+  }
+}
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  
+  img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+    border: 3px solid $white;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  h5 {
+    color: $dark-color;
+    margin-bottom: 0;
+    font-weight: 600;
+  }
+  
+  small {
+    color: rgba($dark-color, 0.6);
+  }
+}
+
+/* Styles pour le CTA */
+.cta {
+  background: linear-gradient(135deg, $gradient-start, $gradient-end);
+  color: $white;
+  padding: 80px 0;
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.1), transparent);
+  }
+  
+  .cta-content {
+    padding: 40px;
+    border-radius: $border-radius;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 1;
+  }
+  
+  .cta-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+  }
+  
+  .cta-text {
+    font-size: 1.2rem;
+    margin-bottom: 25px;
+    opacity: 0.95;
+  }
+}
+
+/* Animation globale */
+@keyframes float {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-10px) rotate(1deg);
+  }
+  50% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  75% {
+    transform: translateY(10px) rotate(-1deg);
+  }
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+}
+
+/* Styles pour la page de profil */
+.profile-header {
+  background: linear-gradient(135deg, $gradient-start, $gradient-end);
+  color: $white;
+  padding: 40px 0;
+  margin-bottom: 30px;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+}
+
+.profile-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 5px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  object-fit: cover;
+}
+
+.profile-stats {
+  background-color: $white;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  padding: 20px;
+  margin-bottom: 30px;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.profile-tab-content {
+  background-color: $white;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  padding: 30px;
+}
+
+.nav-tabs .nav-link {
+  color: $dark-color;
+  font-weight: 500;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 30px;
+  margin-right: 10px;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background-color: rgba($primary-color, 0.05);
+  }
+  
+  &.active {
+    background-color: $primary-color;
+    color: $white;
+  }
+}
+
+/* Styles pour la page de contact */
+.contact-form {
+  background-color: $white;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  padding: 40px;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.contact-info {
+  background-color: $white;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  padding: 40px;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  }
+  
+  .contact-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    
+    i {
+      width: 50px;
+      height: 50px;
+      background-color: rgba($primary-color, 0.1);
+      color: $primary-color;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-right: 15px;
+    }
+  }
+}
+
+/* Styles pour l'internationalisation des numéros de téléphone */
+.phone-input-container {
+  position: relative;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+/* Styles de base pour intl-tel-input */
+.iti {
+  display: block !important;
+  width: 100%;
+}
+
+/* Styles pour la liste déroulante des pays */
+.iti__country-list {
+  position: absolute;
+  z-index: 9999 !important;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 0 -1px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 0 0 4px 4px;
+  max-height: 200px;
+  overflow-y: auto;
+  width: 330px;
+}
+
+/* Style pour chaque pays dans la liste */
+.iti__country {
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.iti__country:hover {
+  background-color: #f1f1f1;
+}
+
+/* Style pour le drapeau sélectionné */
+.iti__selected-flag {
+  padding: 0 8px 0 10px;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+/* Style pour l'input téléphone */
+input[appIntlTelInput] {
+  padding-left: 90px !important;
+}
+
+/* Style pour l'info du pays détecté */
+.country-info {
+  display: flex;
+  align-items: center;
+  font-size: 0.85rem;
+  color: #1a73e8;
+  margin-top: 5px;
+}
+
+.country-flag {
+  margin-right: 5px;
+  border: 1px solid rgba(0,0,0,0.1);
+}

@@ -1,0 +1,435 @@
+<!-- Section Hero -->
+<section class="hero position-relative">
+  <div class="hero-shapes">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+  </div>
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6">
+        <div class="hero-content">
+          <h1 class="hero-title mb-3">Envoyez vos colis avec <span class="highlight">SendByOp</span></h1>
+          <p class="hero-subtitle mb-4">Profitez de l'espace bagages inutilisé des voyageurs pour envoyer vos colis à moindre coût</p>
+          <div class="hero-buttons mt-4">
+            <button class="btn btn-sendbyop btn-lg me-3" (click)="navigateToFlights()">
+              <i class="fas fa-search me-2"></i>Trouver un voyageur
+            </button>
+            <button class="btn btn-outline-sendbyop btn-lg" (click)="navigateToRegister()">
+              <i class="fas fa-suitcase me-2"></i>Proposer mon espace bagage
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 d-none d-lg-block text-center position-relative">
+        <div class="hero-image-wrapper">
+          <img src="assets/images/mobile-ban.png" alt="Carte du monde avec avion" class="img-fluid hero-image">
+          <img src="assets/images/Groupe-107.png" alt="Avion" class="hero-plane">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section Services -->
+<section class="services py-5">
+  <div class="container">
+    <div class="section-header text-center mb-5">
+      <h2 class="section-title">Comment ça marche</h2>
+      <p class="section-subtitle">Une solution innovante pour l'envoi de vos colis</p>
+    </div>
+    
+    <div class="row">
+      <div class="col-md-6 mb-4">
+        <div class="card feature-card h-100">
+          <div class="card-body text-center">
+            <div class="feature-icon">
+              <i class="fas fa-paper-plane"></i>
+            </div>
+            <h3 class="feature-title">Pour les expéditeurs</h3>
+            <p class="feature-description">Trouvez un voyageur qui se rend à votre destination et réservez l'espace dont vous avez besoin pour votre colis.</p>
+            <ul class="list-unstyled text-start mt-4">
+              <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Économisez jusqu'à 70% sur les frais d'envoi</li>
+              <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Suivez votre colis en temps réel</li>
+              <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Livraison rapide et sécurisée</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-6 mb-4">
+        <div class="card feature-card h-100">
+          <div class="card-body text-center">
+            <div class="feature-icon">
+              <i class="fas fa-suitcase"></i>
+            </div>
+            <h3 class="feature-title">Pour les voyageurs</h3>
+            <p class="feature-description">Rentabilisez votre voyage en proposant votre espace bagage inutilisé à des expéditeurs.</p>
+            <ul class="list-unstyled text-start mt-4">
+              <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Gagnez de l'argent avec votre excédent de bagages</li>
+              <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Fixez vos propres tarifs</li>
+              <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Système de paiement sécurisé</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section Étapes -->
+<section class="how-it-works py-5">
+  <div class="container">
+    <div class="section-header text-center mb-5">
+      <h2 class="section-title">En 4 étapes simples</h2>
+      <p class="section-subtitle">Envoyer ou transporter un colis n'a jamais été aussi facile</p>
+    </div>
+    
+    <div class="row">
+      <div class="col-md-3 mb-4">
+        <div class="step-card text-center">
+          <div class="step-number">1</div>
+          <div class="step-icon">
+            <i class="fas fa-search"></i>
+          </div>
+          <h4 class="step-title">Recherchez</h4>
+          <p>Trouvez un voyageur qui se rend à votre destination ou publiez votre voyage.</p>
+        </div>
+      </div>
+      
+      <div class="col-md-3 mb-4">
+        <div class="step-card text-center">
+          <div class="step-number">2</div>
+          <div class="step-icon">
+            <i class="fas fa-handshake"></i>
+          </div>
+          <h4 class="step-title">Réservez</h4>
+          <p>Réservez l'espace dont vous avez besoin ou acceptez les demandes de transport.</p>
+        </div>
+      </div>
+      
+      <div class="col-md-3 mb-4">
+        <div class="step-card text-center">
+          <div class="step-number">3</div>
+          <div class="step-icon">
+            <i class="fas fa-credit-card"></i>
+          </div>
+          <h4 class="step-title">Payez</h4>
+          <p>Effectuez un paiement sécurisé pour confirmer votre réservation.</p>
+        </div>
+      </div>
+      
+      <div class="col-md-3 mb-4">
+        <div class="step-card text-center">
+          <div class="step-number">4</div>
+          <div class="step-icon">
+            <i class="fas fa-box"></i>
+          </div>
+          <h4 class="step-title">Expédiez/Recevez</h4>
+          <p>Remettez ou récupérez votre colis selon les modalités convenues.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section Voyages disponibles -->
+<section class="available-trips py-5">
+  <div class="container">
+    <div class="section-header text-center mb-5">
+      <h2 class="section-title">Voyages disponibles</h2>
+      <p class="section-subtitle">Découvrez les voyageurs prêts à transporter vos colis</p>
+    </div>
+    
+    <div class="row">
+      <div class="col-md-4 mb-4">
+        <div class="card trip-card">
+          <div class="trip-header">
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="d-flex align-items-center">
+                <img src="assets/images/Rectangle-710.png" alt="Voyageur" class="rounded-circle me-2" width="40" height="40">
+                <div>
+                  <h6 class="mb-0">Thomas D.</h6>
+                  <div class="text-warning">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                    <small class="text-muted">(4.5)</small>
+                  </div>
+                </div>
+              </div>
+              <span class="badge bg-success">Vérifié</span>
+            </div>
+          </div>
+          <div class="trip-body">
+            <div class="trip-route">
+              <div class="trip-city">
+                <div>Paris</div>
+                <small class="text-muted">France</small>
+              </div>
+              <div class="trip-route-line"></div>
+              <div class="trip-city">
+                <div>Yaoundé</div>
+                <small class="text-muted">Cameroun</small>
+              </div>
+            </div>
+            <div class="trip-details">
+              <div class="trip-detail-item">
+                <div class="detail-label">Date</div>
+                <div class="detail-value">25 Avr 2025</div>
+              </div>
+              <div class="trip-detail-item">
+                <div class="detail-label">Compagnie</div>
+                <div class="detail-value">Air France</div>
+              </div>
+              <div class="trip-detail-item">
+                <div class="detail-label">Vol</div>
+                <div class="detail-value">AF 953</div>
+              </div>
+            </div>
+            <div class="trip-baggage">
+              <i class="fas fa-luggage-cart"></i>
+              <div class="baggage-info">
+                <div class="baggage-weight">20 kg disponibles</div>
+                <div class="baggage-price">15€/kg</div>
+              </div>
+            </div>
+          </div>
+          <div class="trip-footer">
+            <button class="btn btn-sendbyop btn-sm w-100">Réserver un espace</button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-4 mb-4">
+        <div class="card trip-card">
+          <div class="trip-header">
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="d-flex align-items-center">
+                <img src="assets/images/Rectangle-710.png" alt="Voyageur" class="rounded-circle me-2" width="40" height="40">
+                <div>
+                  <h6 class="mb-0">Marie L.</h6>
+                  <div class="text-warning">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <small class="text-muted">(5.0)</small>
+                  </div>
+                </div>
+              </div>
+              <span class="badge bg-success">Vérifié</span>
+            </div>
+          </div>
+          <div class="trip-body">
+            <div class="trip-route">
+              <div class="trip-city">
+                <div>Paris</div>
+                <small class="text-muted">France</small>
+              </div>
+              <div class="trip-route-line"></div>
+              <div class="trip-city">
+                <div>Dakar</div>
+                <small class="text-muted">Sénégal</small>
+              </div>
+            </div>
+            <div class="trip-details">
+              <div class="trip-detail-item">
+                <div class="detail-label">Date</div>
+                <div class="detail-value">30 Avr 2025</div>
+              </div>
+              <div class="trip-detail-item">
+                <div class="detail-label">Compagnie</div>
+                <div class="detail-value">Air Sénégal</div>
+              </div>
+              <div class="trip-detail-item">
+                <div class="detail-label">Vol</div>
+                <div class="detail-value">HC 403</div>
+              </div>
+            </div>
+            <div class="trip-baggage">
+              <i class="fas fa-luggage-cart"></i>
+              <div class="baggage-info">
+                <div class="baggage-weight">15 kg disponibles</div>
+                <div class="baggage-price">18€/kg</div>
+              </div>
+            </div>
+          </div>
+          <div class="trip-footer">
+            <button class="btn btn-sendbyop btn-sm w-100">Réserver un espace</button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-4 mb-4">
+        <div class="card trip-card">
+          <div class="trip-header">
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="d-flex align-items-center">
+                <img src="assets/images/Rectangle-710.png" alt="Voyageur" class="rounded-circle me-2" width="40" height="40">
+                <div>
+                  <h6 class="mb-0">Jean P.</h6>
+                  <div class="text-warning">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <small class="text-muted">(4.0)</small>
+                  </div>
+                </div>
+              </div>
+              <span class="badge bg-success">Vérifié</span>
+            </div>
+          </div>
+          <div class="trip-body">
+            <div class="trip-route">
+              <div class="trip-city">
+                <div>Paris</div>
+                <small class="text-muted">France</small>
+              </div>
+              <div class="trip-route-line"></div>
+              <div class="trip-city">
+                <div>Abidjan</div>
+                <small class="text-muted">Côte d'Ivoire</small>
+              </div>
+            </div>
+            <div class="trip-details">
+              <div class="trip-detail-item">
+                <div class="detail-label">Date</div>
+                <div class="detail-value">2 Mai 2025</div>
+              </div>
+              <div class="trip-detail-item">
+                <div class="detail-label">Compagnie</div>
+                <div class="detail-value">Air France</div>
+              </div>
+              <div class="trip-detail-item">
+                <div class="detail-label">Vol</div>
+                <div class="detail-value">AF 702</div>
+              </div>
+            </div>
+            <div class="trip-baggage">
+              <i class="fas fa-luggage-cart"></i>
+              <div class="baggage-info">
+                <div class="baggage-weight">10 kg disponibles</div>
+                <div class="baggage-price">20€/kg</div>
+              </div>
+            </div>
+          </div>
+          <div class="trip-footer">
+            <button class="btn btn-sendbyop btn-sm w-100">Réserver un espace</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="text-center mt-5">
+      <button class="btn btn-outline-sendbyop btn-lg" (click)="navigateToFlights()">
+        <i class="fas fa-plane me-2"></i>Voir tous les voyages disponibles
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- Section Témoignages -->
+<section class="testimonials py-5">
+  <div class="container">
+    <div class="section-header text-center mb-5">
+      <h2 class="section-title">Ils nous font confiance</h2>
+      <p class="section-subtitle">Découvrez ce que nos utilisateurs pensent de SendByOp</p>
+    </div>
+    
+    <div class="row">
+      <div class="col-md-4 mb-4">
+        <div class="card testimonial-card h-100">
+          <div class="card-body">
+            <div class="testimonial-rating mb-3">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+            <p class="testimonial-text">"J'ai pu envoyer un colis à ma famille au Cameroun pour moins de la moitié du prix habituel. Le service est impeccable et le suivi est parfait !"</p>
+            <div class="testimonial-author d-flex align-items-center mt-4">
+              <img src="assets/images/Rectangle-710.png" alt="Sophie M." class="rounded-circle">
+              <div>
+                <h5 class="mb-0">Sophie M.</h5>
+                <small>Expéditrice</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-4 mb-4">
+        <div class="card testimonial-card h-100">
+          <div class="card-body">
+            <div class="testimonial-rating mb-3">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+            </div>
+            <p class="testimonial-text">"En tant que voyageur fréquent, SendByOp me permet de rentabiliser mes voyages. La plateforme est intuitive et les paiements sont rapides !"</p>
+            <div class="testimonial-author d-flex align-items-center mt-4">
+              <img src="assets/images/Rectangle-710.png" alt="Marc T." class="rounded-circle">
+              <div>
+                <h5 class="mb-0">Marc T.</h5>
+                <small>Voyageur</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-4 mb-4">
+        <div class="card testimonial-card h-100">
+          <div class="card-body">
+            <div class="testimonial-rating mb-3">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+            <p class="testimonial-text">"Une solution innovante qui répond à un vrai besoin. J'ai pu envoyer des cadeaux à ma famille au Sénégal sans me ruiner. Je recommande vivement !"</p>
+            <div class="testimonial-author d-flex align-items-center mt-4">
+              <img src="assets/images/Rectangle-710.png" alt="Aminata D." class="rounded-circle">
+              <div>
+                <h5 class="mb-0">Aminata D.</h5>
+                <small>Expéditrice</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section CTA -->
+<section class="cta py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div class="cta-content text-center">
+          <h2 class="cta-title">Prêt à envoyer votre colis ?</h2>
+          <p class="cta-text">Rejoignez notre communauté et profitez d'une solution d'envoi économique et écologique</p>
+          <div class="cta-buttons">
+            <button class="btn btn-cta btn-lg me-3" (click)="navigateToFlights()">
+              <i class="fas fa-search me-2"></i>Trouver un voyageur
+            </button>
+            <button class="btn btn-light btn-lg" (click)="navigateToRegister()">
+              <i class="fas fa-user-plus me-2"></i>Créer un compte
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

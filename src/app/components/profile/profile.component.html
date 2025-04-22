@@ -1,0 +1,654 @@
+<div class="profile-container">
+  <div class="container">
+    <!-- En-tête du profil -->
+    <div class="profile-header">
+      <div class="row align-items-center">
+        <div class="col-md-2 text-center">
+          <img [src]="profilePictureUrl" alt="Photo de profil" class="profile-avatar">
+          <button class="btn btn-sm btn-outline-sendbyop mt-2" data-bs-toggle="modal" data-bs-target="#photoModal">
+            <i class="fas fa-camera me-1"></i> Modifier
+          </button>
+        </div>
+        <div class="col-md-6">
+          <h2 class="mb-1">{{ currentUser?.firstName }} {{ currentUser?.lastName }}</h2>
+          <p class="text-muted mb-2">{{ currentUser?.email }}</p>
+          <div class="d-flex align-items-center">
+            <span class="badge bg-success me-2">Compte vérifié</span>
+            <div class="text-warning">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+              <small class="text-muted ms-1">(4.5)</small>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="profile-stats">
+            <div class="stat-item">
+              <div class="stat-value">{{ myTrips.length }}</div>
+              <div class="stat-label">Voyages</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">{{ myBookings.length }}</div>
+              <div class="stat-label">Réservations</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">{{ myPayments.length }}</div>
+              <div class="stat-label">Paiements</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Contenu du profil -->
+    <div class="row">
+      <!-- Navigation du profil -->
+      <div class="col-md-3">
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="profile-nav">
+              <ul class="nav flex-column">
+                <li class="nav-item">
+                  <a class="nav-link" [class.active]="activeTab === 'personal'" (click)="setActiveTab('personal')">
+                    <i class="fas fa-user"></i> Informations personnelles
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" [class.active]="activeTab === 'trips'" (click)="setActiveTab('trips')">
+                    <i class="fas fa-plane"></i> Mes voyages
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" [class.active]="activeTab === 'bookings'" (click)="setActiveTab('bookings')">
+                    <i class="fas fa-suitcase"></i> Mes réservations
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" [class.active]="activeTab === 'reviews'" (click)="setActiveTab('reviews')">
+                    <i class="fas fa-star"></i> Mes avis
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" [class.active]="activeTab === 'payments'" (click)="setActiveTab('payments')">
+                    <i class="fas fa-credit-card"></i> Mes paiements
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" [class.active]="activeTab === 'bank'" (click)="setActiveTab('bank')">
+                    <i class="fas fa-university"></i> Coordonnées bancaires
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" [class.active]="activeTab === 'security'" (click)="setActiveTab('security')">
+                    <i class="fas fa-lock"></i> Sécurité
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Besoin d'aide ?</h5>
+            <p class="card-text">Notre équipe de support est disponible 7j/7 pour vous aider.</p>
+            <a href="#" class="btn btn-outline-sendbyop w-100">
+              <i class="fas fa-headset me-2"></i> Contacter le support
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Contenu principal -->
+      <div class="col-md-9">
+        <!-- Informations personnelles -->
+        <div class="card mb-4" *ngIf="activeTab === 'personal'">
+          <div class="card-header">
+            <h5 class="mb-0">Informations personnelles</h5>
+          </div>
+          <div class="card-body">
+            <div *ngIf="success" class="alert alert-success mb-4">
+              {{ success }}
+            </div>
+            
+            <div *ngIf="error" class="alert alert-danger mb-4">
+              {{ error }}
+            </div>
+            
+            <form [formGroup]="profileForm" (ngSubmit)="onProfileSubmit()">
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="firstName" class="form-label">Prénom</label>
+                  <input type="text" class="form-control" id="firstName" formControlName="firstName">
+                  <div *ngIf="profileForm.get('firstName')?.invalid && profileForm.get('firstName')?.touched" class="text-danger mt-1">
+                    Le prénom est requis
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label for="lastName" class="form-label">Nom</label>
+                  <input type="text" class="form-control" id="lastName" formControlName="lastName">
+                  <div *ngIf="profileForm.get('lastName')?.invalid && profileForm.get('lastName')?.touched" class="text-danger mt-1">
+                    Le nom est requis
+                  </div>
+                </div>
+              </div>
+              
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="email" class="form-label">Email</label>
+                  <input type="email" class="form-control" id="email" formControlName="email">
+                  <div *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched" class="text-danger mt-1">
+                    Veuillez entrer une adresse email valide
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label for="phone" class="form-label">Téléphone</label>
+                  <input type="tel" class="form-control" id="phone" formControlName="phone">
+                  <div *ngIf="profileForm.get('phone')?.invalid && profileForm.get('phone')?.touched" class="text-danger mt-1">
+                    Veuillez entrer un numéro de téléphone valide
+                  </div>
+                </div>
+              </div>
+              
+              <div class="mb-3">
+                <label for="address" class="form-label">Adresse</label>
+                <input type="text" class="form-control" id="address" formControlName="address">
+                <div *ngIf="profileForm.get('address')?.invalid && profileForm.get('address')?.touched" class="text-danger mt-1">
+                  L'adresse est requise
+                </div>
+              </div>
+              
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="city" class="form-label">Ville</label>
+                  <input type="text" class="form-control" id="city" formControlName="city">
+                  <div *ngIf="profileForm.get('city')?.invalid && profileForm.get('city')?.touched" class="text-danger mt-1">
+                    La ville est requise
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label for="country" class="form-label">Pays</label>
+                  <input type="text" class="form-control" id="country" formControlName="country">
+                  <div *ngIf="profileForm.get('country')?.invalid && profileForm.get('country')?.touched" class="text-danger mt-1">
+                    Le pays est requis
+                  </div>
+                </div>
+              </div>
+              
+              <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button type="submit" class="btn btn-sendbyop" [disabled]="profileForm.invalid || loading">
+                  <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+                  Enregistrer les modifications
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        
+        <!-- Mes voyages -->
+        <div class="card mb-4" *ngIf="activeTab === 'trips'">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Mes voyages</h5>
+            <button class="btn btn-sendbyop btn-sm" data-bs-toggle="modal" data-bs-target="#tripModal">
+              <i class="fas fa-plus me-2"></i> Ajouter un voyage
+            </button>
+          </div>
+          <div class="card-body">
+            <div *ngIf="myTrips.length === 0" class="text-center py-5">
+              <i class="fas fa-plane-slash fa-3x text-muted mb-3"></i>
+              <h5>Vous n'avez pas encore de voyages</h5>
+              <p class="text-muted">Ajoutez votre prochain voyage et commencez à gagner de l'argent avec votre excédent de bagages.</p>
+              <button class="btn btn-sendbyop mt-3">
+                <i class="fas fa-plus me-2"></i> Ajouter un voyage
+              </button>
+            </div>
+            
+            <div *ngIf="myTrips.length > 0">
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Itinéraire</th>
+                      <th>Date</th>
+                      <th>Vol</th>
+                      <th>Espace disponible</th>
+                      <th>Prix/kg</th>
+                      <th>Statut</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let trip of myTrips">
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <span>{{ trip.departure }}</span>
+                          <i class="fas fa-arrow-right mx-2 text-muted"></i>
+                          <span>{{ trip.arrival }}</span>
+                        </div>
+                      </td>
+                      <td>{{ trip.date | date:'dd MMM yyyy' }}</td>
+                      <td>{{ trip.airline }} {{ trip.flightNumber }}</td>
+                      <td>{{ trip.availableWeight }} kg</td>
+                      <td>{{ trip.pricePerKg }}€/kg</td>
+                      <td><span class="badge bg-success">{{ trip.status }}</span></td>
+                      <td>
+                        <div class="btn-group">
+                          <button class="btn btn-sm btn-outline-primary">
+                            <i class="fas fa-edit"></i>
+                          </button>
+                          <button class="btn btn-sm btn-outline-danger" (click)="cancelTrip(trip.id)">
+                            <i class="fas fa-trash"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Mes réservations -->
+        <div class="card mb-4" *ngIf="activeTab === 'bookings'">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Mes réservations</h5>
+            <button class="btn btn-sendbyop btn-sm">
+              <i class="fas fa-search me-2"></i> Rechercher un voyage
+            </button>
+          </div>
+          <div class="card-body">
+            <div *ngIf="myBookings.length === 0" class="text-center py-5">
+              <i class="fas fa-suitcase-rolling fa-3x text-muted mb-3"></i>
+              <h5>Vous n'avez pas encore de réservations</h5>
+              <p class="text-muted">Recherchez un voyage et réservez de l'espace pour votre colis.</p>
+              <button class="btn btn-sendbyop mt-3">
+                <i class="fas fa-search me-2"></i> Rechercher un voyage
+              </button>
+            </div>
+            
+            <div *ngIf="myBookings.length > 0">
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Voyageur</th>
+                      <th>Itinéraire</th>
+                      <th>Date</th>
+                      <th>Poids</th>
+                      <th>Prix total</th>
+                      <th>Statut</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let booking of myBookings">
+                      <td>{{ booking.travelerName }}</td>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <span>{{ booking.departure }}</span>
+                          <i class="fas fa-arrow-right mx-2 text-muted"></i>
+                          <span>{{ booking.arrival }}</span>
+                        </div>
+                      </td>
+                      <td>{{ booking.date | date:'dd MMM yyyy' }}</td>
+                      <td>{{ booking.weight }} kg</td>
+                      <td>{{ booking.totalPrice }}€</td>
+                      <td><span class="badge bg-success">{{ booking.status }}</span></td>
+                      <td>
+                        <div class="btn-group">
+                          <button class="btn btn-sm btn-outline-primary">
+                            <i class="fas fa-eye"></i>
+                          </button>
+                          <button class="btn btn-sm btn-outline-danger" (click)="cancelBooking(booking.id)">
+                            <i class="fas fa-times"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Mes paiements -->
+        <div class="card mb-4" *ngIf="activeTab === 'payments'">
+          <div class="card-header">
+            <h5 class="mb-0">Historique des paiements</h5>
+          </div>
+          <div class="card-body">
+            <div *ngIf="myPayments.length === 0" class="text-center py-5">
+              <i class="fas fa-receipt fa-3x text-muted mb-3"></i>
+              <h5>Aucun paiement effectué</h5>
+              <p class="text-muted">Votre historique de paiements apparaîtra ici.</p>
+            </div>
+            
+            <div *ngIf="myPayments.length > 0">
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Description</th>
+                      <th>Montant</th>
+                      <th>Méthode</th>
+                      <th>Statut</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let payment of myPayments">
+                      <td>{{ payment.date | date:'dd MMM yyyy' }}</td>
+                      <td>{{ payment.description }}</td>
+                      <td>{{ payment.amount }}€</td>
+                      <td>{{ payment.method }}</td>
+                      <td><span class="badge bg-success">{{ payment.status }}</span></td>
+                      <td>
+                        <button class="btn btn-sm btn-outline-primary">
+                          <i class="fas fa-file-invoice"></i> Reçu
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Coordonnées bancaires -->
+        <div class="card mb-4" *ngIf="activeTab === 'bank'">
+          <div class="card-header">
+            <h5 class="mb-0">Coordonnées bancaires</h5>
+          </div>
+          <div class="card-body">
+            <div *ngIf="success" class="alert alert-success mb-4">
+              {{ success }}
+            </div>
+            
+            <div *ngIf="error" class="alert alert-danger mb-4">
+              {{ error }}
+            </div>
+            
+            <p class="text-muted mb-4">Ces informations sont nécessaires pour recevoir vos paiements en tant que voyageur.</p>
+            
+            <form [formGroup]="bankAccountForm" (ngSubmit)="onBankAccountSubmit()">
+              <div class="mb-3">
+                <label for="accountHolder" class="form-label">Titulaire du compte</label>
+                <input type="text" class="form-control" id="accountHolder" formControlName="accountHolder">
+                <div *ngIf="bankAccountForm.get('accountHolder')?.invalid && bankAccountForm.get('accountHolder')?.touched" class="text-danger mt-1">
+                  Le titulaire du compte est requis
+                </div>
+              </div>
+              
+              <div class="mb-3">
+                <label for="bankName" class="form-label">Nom de la banque</label>
+                <input type="text" class="form-control" id="bankName" formControlName="bankName">
+                <div *ngIf="bankAccountForm.get('bankName')?.invalid && bankAccountForm.get('bankName')?.touched" class="text-danger mt-1">
+                  Le nom de la banque est requis
+                </div>
+              </div>
+              
+              <div class="mb-3">
+                <label for="accountNumber" class="form-label">Numéro de compte</label>
+                <input type="text" class="form-control" id="accountNumber" formControlName="accountNumber">
+                <div *ngIf="bankAccountForm.get('accountNumber')?.invalid && bankAccountForm.get('accountNumber')?.touched" class="text-danger mt-1">
+                  Le numéro de compte est requis
+                </div>
+              </div>
+              
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="iban" class="form-label">IBAN</label>
+                  <input type="text" class="form-control" id="iban" formControlName="iban">
+                  <div *ngIf="bankAccountForm.get('iban')?.invalid && bankAccountForm.get('iban')?.touched" class="text-danger mt-1">
+                    L'IBAN est requis
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label for="bic" class="form-label">BIC/SWIFT</label>
+                  <input type="text" class="form-control" id="bic" formControlName="bic">
+                  <div *ngIf="bankAccountForm.get('bic')?.invalid && bankAccountForm.get('bic')?.touched" class="text-danger mt-1">
+                    Le BIC/SWIFT est requis
+                  </div>
+                </div>
+              </div>
+              
+              <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button type="submit" class="btn btn-sendbyop" [disabled]="bankAccountForm.invalid || loading">
+                  <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+                  Enregistrer les coordonnées bancaires
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        
+        <!-- Sécurité -->
+        <div class="card mb-4" *ngIf="activeTab === 'security'">
+          <div class="card-header">
+            <h5 class="mb-0">Sécurité</h5>
+          </div>
+          <div class="card-body">
+            <div class="mb-4">
+              <h6>Changer de mot de passe</h6>
+              <p class="text-muted">Pour des raisons de sécurité, nous vous recommandons de changer régulièrement votre mot de passe.</p>
+              <button class="btn btn-outline-sendbyop">
+                <i class="fas fa-lock me-2"></i> Changer de mot de passe
+              </button>
+            </div>
+            
+            <hr>
+            
+            <div class="mb-4">
+              <h6>Authentification à deux facteurs</h6>
+              <p class="text-muted">Ajoutez une couche de sécurité supplémentaire à votre compte.</p>
+              <button class="btn btn-outline-sendbyop">
+                <i class="fas fa-shield-alt me-2"></i> Activer l'authentification à deux facteurs
+              </button>
+            </div>
+            
+            <hr>
+            
+            <div>
+              <h6>Sessions actives</h6>
+              <p class="text-muted">Gérez les appareils connectés à votre compte.</p>
+              <button class="btn btn-outline-sendbyop">
+                <i class="fas fa-desktop me-2"></i> Voir les sessions actives
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Avis -->
+        <div class="card mb-4" *ngIf="activeTab === 'reviews'">
+          <div class="card-header">
+            <h5 class="mb-0">Mes avis</h5>
+          </div>
+          <div class="card-body">
+            <!-- Onglets pour les avis donnés et reçus -->
+            <ul class="nav nav-tabs mb-4">
+              <li class="nav-item">
+                <a class="nav-link active" id="given-tab" data-bs-toggle="tab" href="#given" role="tab">
+                  <i class="fas fa-paper-plane me-2"></i>Avis donnés ({{ reviewsGiven.length }})
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="received-tab" data-bs-toggle="tab" href="#received" role="tab">
+                  <i class="fas fa-inbox me-2"></i>Avis reçus ({{ reviewsReceived.length }})
+                </a>
+              </li>
+            </ul>
+            
+            <div class="tab-content">
+              <!-- Avis donnés -->
+              <div class="tab-pane fade show active" id="given" role="tabpanel">
+                <div *ngIf="reviewsGiven.length === 0" class="text-center py-4">
+                  <i class="fas fa-star fa-3x text-muted mb-3"></i>
+                  <h5>Vous n'avez pas encore donné d'avis</h5>
+                  <p class="text-muted">Vos avis aident les autres utilisateurs à faire des choix éclairés.</p>
+                </div>
+                
+                <div *ngIf="reviewsGiven.length > 0">
+                  <div class="review-card mb-3" *ngFor="let review of reviewsGiven">
+                    <div class="review-header d-flex justify-content-between align-items-center">
+                      <div>
+                        <h6 class="mb-1">{{ review.targetName }}</h6>
+                        <small class="text-muted">{{ review.date | date:'dd/MM/yyyy' }}</small>
+                      </div>
+                      <div class="review-rating">
+                        <span *ngFor="let star of [1, 2, 3, 4, 5]" class="text-warning">
+                          <i class="fas" [ngClass]="star <= review.rating ? 'fa-star' : 'fa-star-o'"></i>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="review-content mt-2">
+                      <p>{{ review.comment }}</p>
+                    </div>
+                    <div *ngIf="review.response" class="review-response mt-2 p-3 bg-light">
+                      <small class="text-muted d-block mb-1">Réponse de {{ review.targetName }}:</small>
+                      <p class="mb-0">{{ review.response }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Avis reçus -->
+              <div class="tab-pane fade" id="received" role="tabpanel">
+                <div *ngIf="reviewsReceived.length === 0" class="text-center py-4">
+                  <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                  <h5>Vous n'avez pas encore reçu d'avis</h5>
+                  <p class="text-muted">Les avis apparaîtront ici une fois que vous aurez reçu des évaluations.</p>
+                </div>
+                
+                <div *ngIf="reviewsReceived.length > 0">
+                  <div class="review-card mb-3" *ngFor="let review of reviewsReceived">
+                    <div class="review-header d-flex justify-content-between align-items-center">
+                      <div>
+                        <h6 class="mb-1">{{ review.reviewerName }}</h6>
+                        <small class="text-muted">{{ review.date | date:'dd/MM/yyyy' }}</small>
+                      </div>
+                      <div class="review-rating">
+                        <span *ngFor="let star of [1, 2, 3, 4, 5]" class="text-warning">
+                          <i class="fas" [ngClass]="star <= review.rating ? 'fa-star' : 'fa-star-o'"></i>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="review-content mt-2">
+                      <p>{{ review.comment }}</p>
+                    </div>
+                    <div *ngIf="review.response" class="review-response mt-2 p-3 bg-light">
+                      <small class="text-muted d-block mb-1">Votre réponse:</small>
+                      <p class="mb-0">{{ review.response }}</p>
+                      <button class="btn btn-sm btn-outline-sendbyop mt-2" (click)="respondToReview(review)">
+                        <i class="fas fa-edit me-1"></i> Modifier la réponse
+                      </button>
+                    </div>
+                    <div *ngIf="!review.response" class="mt-2">
+                      <button class="btn btn-sm btn-sendbyop" (click)="respondToReview(review)">
+                        <i class="fas fa-reply me-1"></i> Répondre
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal pour la photo de profil -->
+<div class="modal fade" id="photoModal" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="photoModalLabel">Modifier votre photo de profil</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center mb-4">
+          <img [src]="profilePictureUrl" alt="Photo de profil" class="img-thumbnail profile-preview">
+        </div>
+        
+        <div class="mb-3">
+          <label for="profilePicture" class="form-label">Sélectionner une nouvelle photo</label>
+          <input type="file" class="form-control" id="profilePicture" accept="image/*" (change)="onFileSelected($event)">
+          <small class="text-muted">Format recommandé: JPG ou PNG, max 2Mo</small>
+        </div>
+        
+        <div *ngIf="success" class="alert alert-success">
+          {{ success }}
+        </div>
+        
+        <div *ngIf="error" class="alert alert-danger">
+          {{ error }}
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger" (click)="removeProfilePicture()" [disabled]="loading">
+          <i class="fas fa-trash me-1"></i> Supprimer
+        </button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+        <button type="button" class="btn btn-sendbyop" (click)="uploadProfilePicture()" [disabled]="!selectedFile || loading">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+          Enregistrer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal pour répondre à un avis -->
+<div class="modal fade" id="responseModal" tabindex="-1" aria-labelledby="responseModalLabel" aria-hidden="true" *ngIf="selectedReview">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="responseModalLabel">Répondre à l'avis</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+      </div>
+      <div class="modal-body">
+        <div class="review-card mb-3">
+          <div class="review-header d-flex justify-content-between align-items-center">
+            <div>
+              <h6 class="mb-1">{{ selectedReview.reviewerName }}</h6>
+              <small class="text-muted">{{ selectedReview.date | date:'dd/MM/yyyy' }}</small>
+            </div>
+            <div class="review-rating">
+              <span *ngFor="let star of [1, 2, 3, 4, 5]" class="text-warning">
+                <i class="fas" [ngClass]="star <= selectedReview.rating ? 'fa-star' : 'fa-star-o'"></i>
+              </span>
+            </div>
+          </div>
+          <div class="review-content mt-2">
+            <p>{{ selectedReview.comment }}</p>
+          </div>
+        </div>
+        
+        <form [formGroup]="responseForm">
+          <div class="mb-3">
+            <label for="response" class="form-label">Votre réponse</label>
+            <textarea class="form-control" id="response" rows="4" formControlName="response" placeholder="Écrivez votre réponse ici..."></textarea>
+            <div *ngIf="responseForm.get('response')?.invalid && responseForm.get('response')?.touched" class="text-danger mt-1">
+              Une réponse est requise
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+        <button type="button" class="btn btn-sendbyop" (click)="submitResponse()" [disabled]="responseForm.invalid || loading">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+          Envoyer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

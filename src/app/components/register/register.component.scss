@@ -1,0 +1,103 @@
+// Variables
+$primary-color: #0066cc;
+$white: #ffffff;
+$light-gray: #f8f9fa;
+$dark-color: #333333;
+
+.auth-container {
+  padding: 60px 0;
+  min-height: calc(100vh - 160px);
+  display: flex;
+  align-items: center;
+}
+
+.auth-card {
+  background-color: $white;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  
+  .auth-header {
+    margin-bottom: 30px;
+    
+    .auth-logo {
+      height: 60px;
+      margin-bottom: 20px;
+    }
+    
+    .auth-title {
+      color: $primary-color;
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    
+    .auth-subtitle {
+      color: #6c757d;
+      font-size: 1rem;
+    }
+  }
+  
+  .auth-form {
+    .form-label {
+      font-weight: 500;
+    }
+    
+    .input-group-text {
+      background-color: $primary-color;
+      color: $white;
+      border-color: $primary-color;
+    }
+    
+    .form-control {
+      border-radius: 0 4px 4px 0;
+      
+      &:focus {
+        box-shadow: none;
+        border-color: $primary-color;
+      }
+    }
+    
+    .invalid-feedback {
+      font-size: 0.85rem;
+    }
+    
+    .form-check-input:checked {
+      background-color: $primary-color;
+      border-color: $primary-color;
+    }
+    
+    .form-check-label {
+      a {
+        color: $primary-color;
+        text-decoration: none;
+        
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+    
+    .btn-sendbyop {
+      padding: 10px 20px;
+      font-weight: 500;
+      
+      &:disabled {
+        background-color: lighten($primary-color, 20%);
+        border-color: lighten($primary-color, 20%);
+      }
+    }
+  }
+  
+  .auth-links {
+    a {
+      color: $primary-color;
+      text-decoration: none;
+      font-weight: 500;
+      
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
